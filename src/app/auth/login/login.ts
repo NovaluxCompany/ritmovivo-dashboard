@@ -8,32 +8,37 @@ import { FormsModule, NgForm } from '@angular/forms';
   styles: ``,
 })
 export class Login {
-
-  reintento: boolean = false
-  mostrarError: boolean = false
-  mensajeError: string = ''
+  retry = false
+  showError: boolean = false
+  messageError: string = ''
 
     login(form: NgForm) {
       const correoElectronico = form.value.correoElectronico
-      const contraseña = form.value.contraseña
+      const password = form.value.password
+      const retry = false
 
       if(!correoElectronico){
-        this.mostrarError = true
-        this.mensajeError = "Usuario o contraseña incorrectos."
+        this.showError = true
+        this.messageError = "Incorrect username or password."
       }
-      this.validarContraseña(contraseña)
+      this.validatePassword(password)
       
 
-      console.log(correoElectronico, contraseña)
+      console.log(correoElectronico, password)
+
     }
 
-    validarContraseña(contra: string){
-      const longitud = /^(?=.*[0-9]).{7,}$/;
-      if(!longitud.test(contra)){
-        this.mensajeError = "La contraseña debe tener mas de 6 palabras"
-        return this.mostrarError = true
+    validatePassword(passw: string){
+      const length = /^(?=.*[0-9]).{7,}$/;
+      if(!length.test(passw)){
+        this.messageError = "The password must be longer than 6 words"
+        return this.showError = true
       }
     return
+    }
+
+    validateTry(){
+      this.retry = true
     }
 
 }
