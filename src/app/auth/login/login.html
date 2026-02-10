@@ -1,31 +1,36 @@
 <div class="flex items-center justify-center min-h-screen bg-gray-50">
   <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-lg shadow-sm">
     
-    <form class="space-y-6">
+    <form #f="ngForm" (ngSubmit)="f.form.valid && login(f)" class="space-y-6">
       <h2 class="text-2xl font-bold text-center text-gray-900">Inicio De Sesión</h2>
-
       <div>
         <label for="correoElectronico" class="block mb-2 text-sm font-medium text-gray-900">Correo Electrónico</label>
-        <input type="email" id="corrreoElectronico" 
+        <input type="email" id="corrreoElectronico" name="corrreoElectronico" 
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-          placeholder="nombre@empresa.com" required>
+          placeholder="nombre@empresa.com" ngModel required>
       </div>
 
       <div>
         <label for="contraseña" class="block mb-2 text-sm font-medium text-gray-900">Contraseña</label>
-        <input type="password" id="contraseña" 
+        <input type="password" id="contraseña" name="contraseña" 
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-          placeholder="" required>
+          placeholder="" ngModel required>
       </div>
 
       <button type="submit" 
         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
         Ingresar
       </button>
-
-      <div class="hidden p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-        <span class="font-medium">Error:</span> Usuario o contraseña incorrectos.
+      
+      @if (mostrarError) {
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+        <span class="font-medium" >Error:</span> Usuario o contraseña incorrectos.
       </div>
+      } @else {
+        <div class="hidden p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+        <span class="font-medium" >Error:</span> Usuario o contraseña incorrectos.
+      </div>
+      }
     </form>
   </div>
 </div>
