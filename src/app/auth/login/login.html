@@ -28,6 +28,16 @@
         </div>
       }
     </form>
+
+    @if (isLoading) {
+    <div class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
+    <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+    
+      <p class="mt-4 text-lg font-medium text-gray-700 animate-pulse">
+      Connecting to the server...
+      </p>
+    </div>
+  }
   </div>
 </div>
 
