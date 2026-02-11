@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-
+import { AuthService } from '../auth';
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
@@ -13,6 +13,10 @@ export class Login {
   showError: boolean = false
   messageError: string = ''
 
+  constructor(
+    private authService: AuthService
+  ) {}
+
   login(form: NgForm) {
     if(form.invalid){
       this.messageError = "All fields are required"
@@ -20,6 +24,16 @@ export class Login {
     } else {
       const email = form.value.email
       const password = form.value.password
+
+      this.authService.login(email, password).subscribe({
+        next: () => {
+          //this.ro
+        },
+        error: () => {
+
+        }
+      })
+
       this.validateEmail(email, password)
     }
 
