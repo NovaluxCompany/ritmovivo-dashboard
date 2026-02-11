@@ -7,38 +7,48 @@ import { FormsModule, NgForm } from '@angular/forms';
   templateUrl: './login.html',
   styles: ``,
 })
+
+
 export class Login {
-  retry = false
   showError: boolean = false
   messageError: string = ''
 
-    login(form: NgForm) {
-      const correoElectronico = form.value.correoElectronico
+  login(form: NgForm) {
+    if(form.invalid){
+      this.messageError = "All fields are required"
+      this.showError = true
+      return
+    } else {
+      const email = form.value.email
       const password = form.value.password
-      const retry = false
+      this.validateEmail(email, password)
+    }
 
-      if(!correoElectronico){
-        this.showError = true
-        this.messageError = "Incorrect username or password."
-      }
+}
+
+  validateEmail(eml: string, pass: string){
+    const emailValidate = eml
+    const password = pass
+
+    if(emailValidate.includes("@") && emailValidate.includes(".com")){
       this.validatePassword(password)
-      
-
-      console.log(correoElectronico, password)
-
+    } else {
+      this.showError = true
+      this.messageError = "Incorrect email or password."
     }
+  }
 
-    validatePassword(passw: string){
-      const length = /^(?=.*[0-9]).{7,}$/;
+  validatePassword(passw: string){
+    const length = /^(?=.*[0-9]).{7,}$/;
+    if(passw == ''){
+      this.messageError = "The password cant be empty"
+      return this.showError = true
+    } else {
       if(!length.test(passw)){
-        this.messageError = "The password must be longer than 6 words"
-        return this.showError = true
-      }
-    return
+      this.messageError = "The password must be longer than 6 words"
+      return this.showError = true
+      } 
     }
-
-    validateTry(){
-      this.retry = true
-    }
-
+  return this.showError = false
+  }
 }
