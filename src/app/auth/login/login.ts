@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   imports: [FormsModule],
@@ -14,7 +16,8 @@ export class Login {
   messageError: string = ''
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   login(form: NgForm) {
@@ -25,31 +28,25 @@ export class Login {
       const email = form.value.email
       const password = form.value.password
 
-      this.authService.login(email, password).subscribe({
+      this.validateEmail(email, password)
+
+    this.authService.loginDB(email, password).subscribe({
         next: () => {
-          //this.ro
+          this.router.navigate(['/prueba'])
         },
         error: () => {
-
+          this.showError = true
+          this.messageError = "Incorrect email or password."
         }
       })
+      
 
-      this.validateEmail(email, password)
+      
     }
 
 }
 
-  private validateEmail(eml: string, pass: string){
-    const emailValidate = eml
-    const password = pass
-
-    if(emailValidate.includes("@") && emailValidate.includes(".com")){
-      this.validatePassword(password)
-    } else {
-      this.showError = true
-      this.messageError = "Incorrect email or password."
-    }
-  }
+  
 
   private validatePassword(passw: string){
     const length = /^(?=.*[0-9]).{7,}$/;
