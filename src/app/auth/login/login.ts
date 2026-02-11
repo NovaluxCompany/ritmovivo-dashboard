@@ -26,7 +26,7 @@ export class Login {
 
 }
 
-  validateEmail(eml: string, pass: string){
+  private validateEmail(eml: string, pass: string){
     const emailValidate = eml
     const password = pass
 
@@ -38,7 +38,7 @@ export class Login {
     }
   }
 
-  validatePassword(passw: string){
+  private validatePassword(passw: string){
     const length = /^(?=.*[0-9]).{7,}$/;
     if(passw == ''){
       this.messageError = "The password cant be empty"
