@@ -17,7 +17,6 @@ export class Login {
     if(form.invalid){
       this.messageError = "All fields are required"
       this.showError = true
-      return
     } else {
       const email = form.value.email
       const password = form.value.password
