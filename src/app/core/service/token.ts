@@ -11,15 +11,16 @@ export class Token {
   constructor () {}
 
   saveToken(token: string){
-    localStorage.setItem('token', token)
+    sessionStorage.setItem('token', token)
   }
 
-  getToken(){
-    const token = localStorage.getItem('token')
+  getToken(): string | null{
+    const token = sessionStorage.getItem('token')
     return token
   }
 
   removeToken(){
     localStorage.removeItem('token')
+    sessionStorage.removeItem('token')
   }
 }

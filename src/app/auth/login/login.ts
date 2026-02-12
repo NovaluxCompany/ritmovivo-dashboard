@@ -1,8 +1,9 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Injectable } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth';
 import { Router } from '@angular/router';
 import { Token } from '../../core/service/token';
+import { LoginService } from './login-service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { Token } from '../../core/service/token';
   imports: [FormsModule],
   templateUrl: './login.html'
 })
+
 export class Login {
   showError: boolean = false;
   messageError: string = '';
@@ -17,12 +19,14 @@ export class Login {
 
   constructor(
     private token: Token,
+    private loginService: LoginService,
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {}
 
   login(form: NgForm) {
+    this.token.removeToken()
     this.showError = false;
     this.cdr.detectChanges(); 
 
@@ -51,6 +55,7 @@ export class Login {
 
     this.authService.loginDB(email, password).subscribe({
       next: () => {
+        this.isLoading = false;
         this.router.navigate(['/prueba']);
       },
       error: (err) => {
@@ -61,9 +66,5 @@ export class Login {
         this.cdr.detectChanges();
       }
     });
-  }
-
-  isAuthenticated(){
-    return this.token != null
   }
 }
