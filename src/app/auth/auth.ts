@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators'
-import { Token } from '../core/service/token'
+import { Token, ResponseLogin } from '../core/service/token'
+import { CanActivate } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,17 +17,19 @@ export class AuthService{
 
   loginDB(email: string, password: string) {
     
-      return this.http.post(this.url,
+      return this.http.post<ResponseLogin>(this.url,
         {
           email,
           password
         })
         .pipe(
           tap(Response => {
-            this.token.saveToken(Response)
+            //this.token.saveToken(Response.access_token)
           })
         )
   }
 }
+
+
 
 

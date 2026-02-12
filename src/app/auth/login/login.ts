@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth';
 import { Router } from '@angular/router';
+import { Token } from '../../core/service/token';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class Login {
   isLoading: boolean = false;
 
   constructor(
+    private token: Token,
     private authService: AuthService,
     private router: Router,
     private cdr: ChangeDetectorRef
@@ -49,7 +51,7 @@ export class Login {
 
     this.authService.loginDB(email, password).subscribe({
       next: () => {
-        //this.router.navigate(['/prueba']);
+        this.router.navigate(['/prueba']);
       },
       error: (err) => {
         this.isLoading = false
@@ -59,5 +61,9 @@ export class Login {
         this.cdr.detectChanges();
       }
     });
+  }
+
+  isAuthenticated(){
+    return this.token != null
   }
 }
