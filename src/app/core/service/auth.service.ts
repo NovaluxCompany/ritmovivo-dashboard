@@ -1,18 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators'
-import { Token, ResponseLogin } from '../core/service/token'
-import { CanActivate } from '@angular/router';
+import { Token, ResponseLogin } from './token.service'
 
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService{ 
-  constructor(
-    private http: HttpClient,
-    private token: Token
-  ) {}
+  private http = inject(HttpClient)
+  private token = inject(Token)
+
   private url = "https://ritmovivo-dashboard-api.onrender.com/api/auth/login"
 
   loginDB(email: string, password: string) {

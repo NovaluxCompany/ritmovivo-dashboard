@@ -1,9 +1,9 @@
 import { Component, ChangeDetectorRef, Injectable } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AuthService } from '../auth';
+import { AuthService } from '../../core/service/auth.service';
 import { Router } from '@angular/router';
-import { Token } from '../../core/service/token';
-import { LoginService } from './login-service';
+import { Token } from '../../core/service/token.service';
+import { LoginService } from '../../core/service/login.service';
 
 @Component({
   selector: 'app-login',
