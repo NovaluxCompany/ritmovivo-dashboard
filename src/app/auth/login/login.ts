@@ -1,9 +1,9 @@
-import { Component, ChangeDetectorRef, Injectable } from '@angular/core';
+import { Component, ChangeDetectorRef, Injectable, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../core/service/auth.service';
 import { Router } from '@angular/router';
-import { Token } from '../../core/service/token.service';
-import { LoginService } from '../../core/service/login.service';
+import { TokenService } from '../../core/service/token.service';
+
 
 @Component({
   selector: 'app-login',
@@ -17,13 +17,11 @@ export class Login {
   messageError: string = '';
   isLoading: boolean = false;
 
-  constructor(
-    private token: Token,
-    private loginService: LoginService,
-    private authService: AuthService,
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private token = inject(TokenService)
+  private authService = inject(AuthService)
+  private router = inject(Router)
+  private cdr = inject(ChangeDetectorRef)
+
 
   login(form: NgForm) {
     this.token.removeToken()
@@ -31,7 +29,7 @@ export class Login {
     this.cdr.detectChanges(); 
 
     if (form.invalid) {
-      this.messageError = "All fields are required";
+      this.messageError = "Todos los campos son requeridos";
       this.showError = true;
       return;
     }
@@ -41,14 +39,14 @@ export class Login {
 
     if (!email.includes("@") || !email.includes(".com")) {
       this.isLoading = false
-      this.messageError = "Incorrect email format.";
+      this.messageError = "Formato incorrecto del correo electronico.";
       this.showError = true;
       return;
     }
 
     if (!lengthRegex.test(password)) {
       this.isLoading = false
-      this.messageError = "Password must be 6+ chars.";
+      this.messageError = "La contraseña debe tener 6 o más caracteres.";
       this.showError = true;
       return;
     }

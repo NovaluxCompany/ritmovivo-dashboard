@@ -7,7 +7,7 @@ export interface ResponseLogin{
 @Injectable({
   providedIn: 'root',
 })
-export class Token {
+export class TokenService {
   constructor () {}
 
   saveToken(token: string){
