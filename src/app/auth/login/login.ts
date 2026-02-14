@@ -1,8 +1,8 @@
-import { Component, ChangeDetectorRef, Injectable, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AuthService } from '../../core/service/auth.service';
+import { AuthService } from '../core/service/auth.service';
 import { Router } from '@angular/router';
-import { TokenService } from '../../core/service/token.service';
+import { TokenService } from '../core/service/token.service';
 
 
 @Component({
@@ -59,7 +59,7 @@ export class Login {
       error: (err) => {
         this.isLoading = false
         console.error("Server error", err);
-        this.messageError = "Incorrect email or password.";
+        this.messageError = "Correo electronico y/o contraseña incorrect";
         this.showError = true;
         this.cdr.detectChanges();
       }

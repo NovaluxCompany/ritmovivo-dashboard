@@ -8,19 +8,17 @@ export interface ResponseLogin{
   providedIn: 'root',
 })
 export class TokenService {
-  constructor () {}
 
   saveToken(token: string){
-    sessionStorage.setItem('token', token)
+    localStorage.setItem('token', token)
   }
 
   getToken(): string | null{
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     return token
   }
 
   removeToken(){
     localStorage.removeItem('token')
-    sessionStorage.removeItem('token')
   }
 }
