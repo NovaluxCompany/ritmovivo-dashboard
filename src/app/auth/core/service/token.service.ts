@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
 
-export interface ResponseLogin{
-  access_token: string
-}
-
 @Injectable({
   providedIn: 'root',
 })
