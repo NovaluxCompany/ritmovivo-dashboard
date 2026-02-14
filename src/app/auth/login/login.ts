@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/service/auth.service';
 import { Router } from '@angular/router';
 import { TokenService } from '../core/service/token.service';
@@ -8,7 +8,7 @@ import { TokenService } from '../core/service/token.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './login.html'
 })
 
@@ -21,48 +21,51 @@ export class Login {
   private authService = inject(AuthService)
   private router = inject(Router)
   private cdr = inject(ChangeDetectorRef)
+  private fn = inject(FormBuilder)
 
+  form = this.fn.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  })
 
-  login(form: NgForm) {
-    this.token.removeToken()
-    this.showError = false;
-    this.cdr.detectChanges(); 
+  login() {
+  this.token.removeToken();
+  this.showError = false;
 
-    if (form.invalid) {
+if (this.form.invalid) {
+    this.showError = true;
+    this.isLoading = false;
+
+    const emailControl = this.form.get('email');
+    const passwordControl = this.form.get('password');
+
+    if (emailControl?.hasError('required') || passwordControl?.hasError('required')) {
       this.messageError = "Todos los campos son requeridos";
-      this.showError = true;
-      return;
-    }
-    this.isLoading = true
-    const { email, password } = form.value;
-    const lengthRegex = /^(?=.*[0-9]).{6,}$/;
-
-    if (!email.includes("@") || !email.includes(".com")) {
-      this.isLoading = false
+    } else if (emailControl?.hasError('email')) {
       this.messageError = "Formato incorrecto del correo electronico.";
-      this.showError = true;
-      return;
+    } else if (passwordControl?.hasError('minlength') || passwordControl?.hasError('pattern')) {
+      this.messageError = "La contraseña debe tener 6 o más caracteres y al menos un número.";
     }
+    
+    return;
+  }
 
-    if (!lengthRegex.test(password)) {
-      this.isLoading = false
-      this.messageError = "La contraseña debe tener 6 o más caracteres.";
+  const email = this.form.get('email')?.value ?? '';
+  const password = this.form.get('password')?.value ?? '';
+
+  this.isLoading = true;
+
+  this.authService.loginDB(email, password).subscribe({
+    next: () => {
+      this.isLoading = false;
+      this.router.navigate(['/prueba']);
+    },
+    error: (err) => {
+      this.isLoading = false;
+      this.messageError = "Correo electrónico y/o contraseña incorrectos";
       this.showError = true;
-      return;
+      this.cdr.detectChanges();
     }
-
-    this.authService.loginDB(email, password).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigate(['/prueba']);
-      },
-      error: (err) => {
-        this.isLoading = false
-        console.error("Server error", err);
-        this.messageError = "Correo electronico y/o contraseña incorrect";
-        this.showError = true;
-        this.cdr.detectChanges();
-      }
-    });
+  });
   }
 }
