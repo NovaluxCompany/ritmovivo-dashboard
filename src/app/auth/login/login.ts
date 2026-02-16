@@ -1,9 +1,8 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../core/service/auth.service';
 import { Router } from '@angular/router';
 import { TokenService } from '../core/service/token.service';
-
 
 @Component({
   selector: 'app-login',
@@ -32,7 +31,7 @@ export class Login {
   this.token.removeToken();
   this.showError = false;
 
-if (this.form.invalid) {
+  if (this.form.invalid) {
     this.showError = true;
     this.isLoading = false;
 
@@ -44,7 +43,7 @@ if (this.form.invalid) {
     } else if (emailControl?.hasError('email')) {
       this.messageError = "Formato incorrecto del correo electronico.";
     } else if (passwordControl?.hasError('minlength') || passwordControl?.hasError('pattern')) {
-      this.messageError = "La contraseña debe tener 6 o más caracteres y al menos un número.";
+      this.messageError = "La contraseña debe tener 6 o más caracteres.";
     }
     
     return;
