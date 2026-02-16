@@ -1,8 +1,8 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../core/service/auth.service';
+import { AuthService } from '../../core/service/auth.service';
 import { Router } from '@angular/router';
-import { TokenService } from '../core/service/token.service';
+import { TokenService } from '../../core/service/token.service';
 
 @Component({
   selector: 'app-login',
@@ -16,19 +16,19 @@ export class Login {
   messageError: string = '';
   isLoading: boolean = false;
 
-  private token = inject(TokenService)
-  private authService = inject(AuthService)
-  private router = inject(Router)
-  private cdr = inject(ChangeDetectorRef)
-  private fn = inject(FormBuilder)
+  private _tokenService = inject(TokenService)
+  private _authService = inject(AuthService)
+  private _router = inject(Router)
+  private _cdr = inject(ChangeDetectorRef)
+  private _fn = inject(FormBuilder)
 
-  form = this.fn.group({
+  form = this._fn.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   })
 
   login() {
-  this.token.removeToken();
+  this._tokenService.removeToken();
   this.showError = false;
 
   if (this.form.invalid) {
@@ -54,16 +54,16 @@ export class Login {
 
   this.isLoading = true;
 
-  this.authService.loginDB(email, password).subscribe({
+  this._authService.loginDB(email, password).subscribe({
     next: () => {
       this.isLoading = false;
-      this.router.navigate(['/prueba']);
+      this._router.navigate(['/prueba']);
     },
     error: (err) => {
       this.isLoading = false;
       this.messageError = "Correo electrónico y/o contraseña incorrectos";
       this.showError = true;
-      this.cdr.detectChanges();
+      this._cdr.detectChanges();
     }
   });
   }

@@ -5,10 +5,10 @@ import { TokenService } from './token.service';
   providedIn: 'root',
 })
 export class LoginService {
-  private token = inject(TokenService)
+  private _tokenService = inject(TokenService)
 
   isAuthenticated(){
-    const valorToken = this.token.getToken()
+    const valorToken = this._tokenService.getToken()
 
     return valorToken != null && valorToken != ''
   }
