@@ -16,55 +16,67 @@ export class Login {
   messageError: string = '';
   isLoading: boolean = false;
 
-  private _tokenService = inject(TokenService)
-  private _authService = inject(AuthService)
-  private _router = inject(Router)
-  private _cdr = inject(ChangeDetectorRef)
-  private _fn = inject(FormBuilder)
+  private _tokenService = inject(TokenService);
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+  private _cdr = inject(ChangeDetectorRef);
+  private _fb = inject(FormBuilder);
 
-  form = this._fn.group({
+  form = this._fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-  })
+  });
 
   login() {
-  this._tokenService.removeToken();
-  this.showError = false;
+    this.resetState();
 
-  if (this.form.invalid) {
-    this.showError = true;
-    this.isLoading = false;
-
-    const emailControl = this.form.get('email');
-    const passwordControl = this.form.get('password');
-
-    if (emailControl?.hasError('required') || passwordControl?.hasError('required')) {
-      this.messageError = "Todos los campos son requeridos";
-    } else if (emailControl?.hasError('email')) {
-      this.messageError = "Formato incorrecto del correo electronico.";
-    } else if (passwordControl?.hasError('minlength') || passwordControl?.hasError('pattern')) {
-      this.messageError = "La contraseña debe tener 6 o más caracteres.";
+    if (!this.isFormValid()) {
+      return; 
     }
-    
-    return;
+
+    this.executeAuthentication();
   }
 
-  const email = this.form.get('email')?.value ?? '';
-  const password = this.form.get('password')?.value ?? '';
+  private resetState() {
+    this._tokenService.removeToken();
+    this.showError = false;
+    this.messageError = '';
+  }
 
-  this.isLoading = true;
-
-  this._authService.loginDB(email, password).subscribe({
-    next: () => {
-      this.isLoading = false;
-      this._router.navigate(['/prueba']);
-    },
-    error: (err) => {
-      this.isLoading = false;
-      this.messageError = "Correo electrónico y/o contraseña incorrectos";
+  private isFormValid(): boolean {
+    if (this.form.invalid) {
       this.showError = true;
-      this._cdr.detectChanges();
+      
+      const email = this.form.get('email');
+      const password = this.form.get('password');
+
+      if (email?.hasError('required') || password?.hasError('required')) {
+        this.messageError = "Todos los campos son requeridos";
+      } else if (email?.hasError('email')) {
+        this.messageError = "Formato incorrecto del correo electrónico.";
+      } else if (password?.hasError('minlength')) {
+        this.messageError = "La contraseña debe tener 6 o más caracteres.";
+      }
+      return false;
     }
-  });
+    return true;
+  }
+
+  private executeAuthentication() {
+    this.isLoading = true;
+    const { email, password } = this.form.getRawValue();
+
+    this._authService.loginDB(email!, password!).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this._router.navigate(['/prueba']);
+      },
+      error: () => {
+        this.isLoading = false;
+        this.showError = true;
+        this.messageError = "Correo electrónico y/o contraseña incorrectos";
+        this._cdr.detectChanges();
+      }
+    });
   }
 }
