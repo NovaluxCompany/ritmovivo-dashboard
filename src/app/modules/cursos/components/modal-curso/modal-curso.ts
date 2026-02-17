@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ModalCursoService } from '../../service/modal-curso.service';
 
 @Component({
   selector: 'app-modal-curso',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styles: ``,
 })
 export class ModalCurso {
-
+    public modalService = inject(ModalCursoService)
 }
