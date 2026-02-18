@@ -91,10 +91,6 @@ export class ModalCursoService {
     })
   }
 
-  viewInfo(){
-    return this._http.get<CourseInterface[]>(this.urlChange('view'))
-  }
-
   changeStatus(id: string, active: boolean){
     return this._http.patch<CourseInterface>(this.urlChange('edit-status'),
   {

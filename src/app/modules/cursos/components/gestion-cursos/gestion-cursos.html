@@ -26,50 +26,52 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-9 gap-2 md:gap-4 px-4 py-2 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 items-center">
-    
+  @for (course of courses(); track course.id) {
     <div class="flex justify-between items-center md:block">
       <span class="font-bold text-gray-900 dark:text-white text-base md:text-sm">Prueba Nombre</span>
-      <span class="md:hidden inline-flex items-center text-green-700 text-[10px] font-bold bg-green-100 px-2 py-0.5 rounded-full">Activo</span>
+      <span class="md:hidden inline-flex items-center text-green-700 text-[10px] font-bold bg-green-100 px-2 py-0.5 rounded-full">{{course.active}}</span>
     </div>
 
     <div class="flex justify-between md:block text-sm">
       <span class="md:hidden font-bold text-gray-500 text-xs">Instructor:</span>
-      <span class="truncate">Prueba instructor</span>
+      <span class="truncate">{{course.instructor}}</span>
     </div>
 
     <div class="flex justify-between md:block text-sm hidden md:block">
       <span class="md:hidden font-bold text-gray-500 text-xs">Duración:</span>
-      <span>Prueba duración</span>
+      <span>{{course.duration}}</span>
     </div>
 
     <div class="flex justify-between md:block text-sm">
       <span class="md:hidden font-bold text-gray-500 text-xs">Precio:</span>
-      <span class="font-semibold md:font-normal">$Prueba</span>
+      <span class="font-semibold md:font-normal">{{course.price}}</span>
     </div>
 
     <div class="flex justify-between md:block text-sm">
       <span class="md:hidden font-bold text-gray-500 text-xs">Día:</span>
-      <span>Prueba dia</span>
+      <span>{{course.day}}</span>
     </div>
 
     <div class="flex justify-between md:block text-sm">
       <span class="md:hidden font-bold text-gray-500 text-xs">Hora:</span>
-      <span>Prueba:hora</span>
+      <span>{{course.time}}</span>
     </div>
 
     <div class="flex justify-between text-sm hidden md:block">
       <span class="md:hidden font-bold text-gray-500 text-xs">Nivel:</span>
-      <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Prueba</span>
+      <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">{{course.level}}</span>
     </div>
 
     <div class="hidden md:flex">
-      <span class="inline-flex items-center text-green-700 text-[11px] font-bold bg-green-100 px-2 py-0.5 rounded-full">Activo</span>
+      <span class="inline-flex items-center text-green-700 text-[11px] font-bold bg-green-100 px-2 py-0.5 rounded-full">{{course.active}}</span>
     </div>
 
     <div class="flex gap-2 md:justify-center border-t md:border-none pt-2 md:pt-0 mt-1 md:mt-0">
       <button (click)="editCourse()"class="text-blue-600 text-xs font-semibold hover:underline">Editar</button>
       <button class="text-red-600 text-xs font-semibold hover:underline">Deshabilitar</button>
     </div>
+  }
+    
   </div>
 </div>
 
