@@ -27,13 +27,11 @@ export class ModalCursoService {
     } else {
       return `${this._env.urlBD}`
     }
-    
   }
 
   openModal(action: string) {
     this._currentAction.set(action)
     this._isOpen.set(true);
-    
   }
 
   closeModal() {

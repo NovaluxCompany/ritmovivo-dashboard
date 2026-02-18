@@ -28,8 +28,13 @@
   <div class="grid grid-cols-1 md:grid-cols-9 gap-2 md:gap-4 px-4 py-2 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 items-center">
   @for (course of courses(); track course.id) {
     <div class="flex justify-between items-center md:block">
-      <span class="font-bold text-gray-900 dark:text-white text-base md:text-sm">Prueba Nombre</span>
-      <span class="md:hidden inline-flex items-center text-green-700 text-[10px] font-bold bg-green-100 px-2 py-0.5 rounded-full">{{course.active}}</span>
+      <span class="font-bold text-gray-900 dark:text-white text-base md:text-sm">{{course.name}}</span>
+      @if(course.isActive){
+        <span class="md:hidden inline-flex items-center text-green-700 text-[10px] font-bold bg-green-100 px-2 py-0.5 rounded-full">Activo</span>
+      } @else {
+        <span class="md:hidden inline-flex items-center text-red-700 text-[10px] font-bold bg-red-100 px-2 py-0.5 rounded-full">Deshabilitado</span>
+      }
+      
     </div>
 
     <div class="flex justify-between md:block text-sm">
@@ -63,12 +68,22 @@
     </div>
 
     <div class="hidden md:flex">
-      <span class="inline-flex items-center text-green-700 text-[11px] font-bold bg-green-100 px-2 py-0.5 rounded-full">{{course.active}}</span>
+      @if(course.isActive === true){
+        <span class="inline-flex items-center text-green-700 text-[11px] font-bold bg-green-100 px-2 py-0.5 rounded-full">Activo</span>
+      } @else {
+        <span class="inline-flex items-center text-red-700 text-[11px] font-bold bg-red-100 px-2 py-0.5 rounded-full">Inactivo</span>
+      }
+      
     </div>
 
     <div class="flex gap-2 md:justify-center border-t md:border-none pt-2 md:pt-0 mt-1 md:mt-0">
       <button (click)="editCourse()"class="text-blue-600 text-xs font-semibold hover:underline">Editar</button>
-      <button class="text-red-600 text-xs font-semibold hover:underline">Deshabilitar</button>
+      @if(course.isActive){
+        <button class="text-red-600 text-xs font-semibold hover:underline">Deshabilitar</button>
+      } @else { 
+        <button class="text-green-600 text-xs font-semibold hover:underline">Habilitar</button>
+      }
+      
     </div>
   }
     

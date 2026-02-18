@@ -13,5 +13,5 @@ export class CourseInterface {
   promo2x1: boolean = false;
   capacity: number = 0;
   startDate: string = '';
-  active: boolean = false;
+  isActive: boolean = false;
 }

@@ -1,16 +1,32 @@
 import { Component, inject } from '@angular/core';
 import { ModalCursoService } from '../../service/modal-curso.service';
-import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NotificacionService } from '../../../../shared/services/notificacion.service';
 
 @Component({
   selector: 'app-modal-curso',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './modal-curso.html',
   styles: ``,
 })
 export class ModalCurso {
+    private _fb = inject(FormBuilder)
     public modalService = inject(ModalCursoService)
-    private toastr = inject(ToastrService)
+    private _notificacionService = inject(NotificacionService)
+
+    public cursoForm: FormGroup = this._fb.group({
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    instructor: ['', Validators.required],
+    level: ['', Validators.required],
+    day: ['Lunes'],
+    time: ['', Validators.required],
+    duration: ['', Validators.required],
+    location: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]],
+    capacity: [0, Validators.min(0)],
+    color: [''],
+    promo: [false]
+  });
 
     actionInSystem() {
     if(this.modalService.currentAction() === 'Create'){
@@ -23,27 +39,11 @@ export class ModalCurso {
     }
 
     actionSave(){
-      this.toastr.success('¡Operación de guardado realizada con éxito!', 'Sistema', {
-      timeOut: 2500,
-      progressBar: true,
-      toastClass: 'ngx-toastr !fixed !top-5 !right-5 !z-[9999] !flex !flex-col !w-72 !p-4 !bg-white !rounded-xl !shadow-2xl !border-l-4 !border-green-500',
-      
-      titleClass: '!text-gray-900 !font-bold !text-sm !block !mb-1',
-      
-      messageClass: '!text-gray-600 !text-xs !block',
-    });
+      this._notificacionService.summonTarget('Guardado')
     }
 
     actionEdit(){
-      this.toastr.success('¡Operación de editado realizada con éxito!', 'Sistema', {
-      timeOut: 2500,
-      progressBar: true,
-      toastClass: 'ngx-toastr !fixed !top-5 !right-5 !z-[9999] !flex !flex-col !w-72 !p-4 !bg-white !rounded-xl !shadow-2xl !border-l-4 !border-green-500',
-      
-      titleClass: '!text-gray-900 !font-bold !text-sm !block !mb-1',
-      
-      messageClass: '!text-gray-600 !text-xs !block',
-    });
+      this._notificacionService.summonTarget('Edición')
     }
 }
 
