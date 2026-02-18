@@ -86,7 +86,7 @@
             </div>
 
             <div class="flex items-center border-t border-gray-200 dark:border-gray-700 p-4 md:p-5 space-x-3">
-                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-2.5 transition-all">
+                <button (click)="actionInSystem()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-2.5 transition-all">
                     {{ modalService.currentAction() === 'Create' ? 'Registrar Curso' : 'Guardar Cambios' }}
                 </button> 
             </div>
@@ -94,3 +94,5 @@
     </div>
 </div>
 }
+
+  
