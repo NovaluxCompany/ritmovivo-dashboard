@@ -12,7 +12,15 @@ import { ModalCurso } from "../modal-curso/modal-curso";
 export class GestionCursos {
   private _modalService =  inject(ModalCursoService)
 
-  abrirCrear(){
-    this._modalService.abrirModal()
+  openCreate(){
+    this._modalService.openModal('Create')
   }
+
+  editCourse(){
+    this._modalService.openModal('Edit')
+  }
+
+
+
+  
 }

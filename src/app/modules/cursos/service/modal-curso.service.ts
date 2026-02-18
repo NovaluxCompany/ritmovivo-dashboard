@@ -6,12 +6,16 @@ import { Injectable, signal } from '@angular/core';
 export class ModalCursoService {
   private _isOpen = signal(false);
   public isOpen = this._isOpen.asReadonly();
+  private _currentAction = signal<string>('')
+  public currentAction = this._currentAction.asReadonly()
 
-  abrirModal() {
+  openModal(action: string) {
+    this._currentAction.set(action)
     this._isOpen.set(true);
+    
   }
 
-  cerrarModal() {
+  closeModal() {
     this._isOpen.set(false);
   }
 }

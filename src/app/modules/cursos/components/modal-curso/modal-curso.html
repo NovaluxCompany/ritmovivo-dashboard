@@ -1,36 +1,96 @@
 @if (modalService.isOpen()) {
 <div id="default-modal" tabindex="-1" aria-hidden="true" 
-       class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full bg-black/50 backdrop-blur-sm">
+     class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full bg-black/60 backdrop-blur-sm">
       
-      <div class="relative p-4 w-full max-w-2xl max-h-full">
-          <div class="relative bg-white border border-gray-200 rounded-lg shadow-lg p-4 md:p-6 dark:bg-gray-800 dark:border-gray-700">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <div class="relative bg-white border border-gray-200 rounded-xl shadow-2xl dark:bg-gray-800 dark:border-gray-700">
               
-              <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-4 md:pb-5">
-                  <h3 class="text-lg font-medium text-gray-900 dark:text-white">
-                      Nuevo Curso
-                  </h3>
-                  <button (click)="modalService.cerrarModal()" type="button" class="text-gray-500 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-9 h-9 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-700 dark:hover:text-white">
-                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/></svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-              </div>
+            <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 p-4 md:p-5">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    {{ modalService.currentAction() === 'Create' ? 'Crear Nuevo Curso' : 'Editar Curso' }}
+                </h3>
+                <button (click)="modalService.closeModal()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-100 hover:text-gray-900 rounded-lg text-sm w-9 h-9 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-700 dark:hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
 
-              <div class="space-y-4 md:space-y-6 py-4 md:py-6">
-                  <p class="leading-relaxed text-gray-600 dark:text-gray-400">
-                      Prueba de crear curso
-                  </p>
-                  <input type="text" placeholder="Nombre del curso" class="w-full p-2.5 bg-gray-50 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-              </div>
+            <div class="p-4 md:p-6 space-y-5 overflow-y-auto max-h-[70vh]">
+                
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre del Curso</label>
+                    <input type="text"  class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
 
-              <div class="flex items-center border-t border-gray-200 dark:border-gray-700 space-x-4 pt-4 md:pt-5">
-                  <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    Guardar
-                  </button> 
-                  <button (click)="modalService.cerrarModal()" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                    Cancelar
-                  </button>
-              </div>
-          </div>
-      </div>
-  </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instructor</label>
+                    <input type="text"  class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Duración</label>
+                    <input type="text"  class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Precio</label>
+                    <input type="text" placeholder="$0.00" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+                  
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Color Identificador</label>
+                    <input type="color" class="w-full h-12 p-1 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer dark:bg-gray-700 dark:border-gray-600">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Día de la semana</label>
+                    <select class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                        <option>Lunes</option>
+                        <option>Martes</option>
+                        <option>Miércoles</option>
+                        <option>Jueves</option>
+                        <option>Viernes</option>
+                        <option>Sábado</option>
+                        <option>Domingo</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hora</label>
+                    <input type="time" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Lugar</label>
+                    <input type="text"  class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
+                    <input type="text"  class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div class="flex items-center">
+                    <input id="2x1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="2x1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Promoción 2x1 activa</label>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Capacidad Máxima</label>
+                    <input type="number" min="0" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Inicio</label>
+                    <input type="date" class="w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                </div>
+            </div>
+
+            <div class="flex items-center border-t border-gray-200 dark:border-gray-700 p-4 md:p-5 space-x-3">
+                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-2.5 transition-all">
+                    {{ modalService.currentAction() === 'Create' ? 'Registrar Curso' : 'Guardar Cambios' }}
+                </button> 
+            </div>
+        </div>
+    </div>
+</div>
 }
