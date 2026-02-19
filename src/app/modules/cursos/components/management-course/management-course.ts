@@ -9,10 +9,10 @@ import { ViewChild } from '@angular/core';
 @Component({
   selector: 'app-gestion-cursos',
   imports: [ModalCourse],
-  templateUrl: './gestion-course.html',
+  templateUrl: './management-course.html',
   styles: ``,
 })
-export class GestionCourse {
+export class ManagementCourse {
   @ViewChild(ModalCourse) modalComponent!: ModalCourse;
   private _modalService =  inject(ModalCourseService)
   private _notificationService = inject(NotificacionService)

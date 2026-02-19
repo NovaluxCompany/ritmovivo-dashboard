@@ -3,7 +3,6 @@ import { inject, Injectable, signal } from '@angular/core';
 import { CourseInterface } from '../models/course.interface';
 import { environment } from '../../../../environments/environment';
 import { checkToken } from '../interceptor/token-interceptor';
-import { isActive } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',

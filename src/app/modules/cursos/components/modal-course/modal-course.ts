@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ModalCourseService } from '../../service/modal-course.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NotificacionService } from '../../../../shared/services/notificacion.service';
-import { GestionCourse } from '../gestion-course/gestion-course';
+import { ManagementCourse } from '../management-course/management-course';
 
 @Component({
   selector: 'app-modal-curso',
@@ -11,7 +11,7 @@ import { GestionCourse } from '../gestion-course/gestion-course';
   styles: ``,
 })
 export class ModalCourse {
-    private _gestCourse = inject(GestionCourse)
+    private _gestCourse = inject(ManagementCourse)
     private _fb = inject(FormBuilder)
     public modalService = inject(ModalCourseService)
     private _notificacionService = inject(NotificacionService)
