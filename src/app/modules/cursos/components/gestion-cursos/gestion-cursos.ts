@@ -3,6 +3,7 @@ import { ModalCursoService } from '../../service/modal-curso.service';
 import { ModalCurso } from "../modal-curso/modal-curso";
 import { CursoService } from '../../service/curso.service';
 import { CourseInterface } from '../../models/curso.interface';
+import { NotificacionService } from '../../../../shared/services/notificacion.service';
 
 @Component({
   selector: 'app-gestion-cursos',
@@ -12,6 +13,7 @@ import { CourseInterface } from '../../models/curso.interface';
 })
 export class GestionCursos {
   private _modalService =  inject(ModalCursoService)
+  private _notificationService = inject(NotificacionService)
   private _cursoService = inject(CursoService)
   public courses = signal<CourseInterface[]>([]);
 
@@ -36,7 +38,9 @@ export class GestionCursos {
     this._modalService.openModal('Edit')
   }
 
-
+  editAct(){
+    this._notificationService.summonTarget('Habilitado')
+  }
 
   
 }

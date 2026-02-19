@@ -26,7 +26,7 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-9 gap-2 md:gap-4 px-4 py-2 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 items-center">
-  @for (course of courses(); track course.id) {
+  @for (course of courses(); track course._id) {
     <div class="flex justify-between items-center md:block">
       <span class="font-bold text-gray-900 dark:text-white text-base md:text-sm">{{course.name}}</span>
       @if(course.isActive){
@@ -49,7 +49,7 @@
 
     <div class="flex justify-between md:block text-sm">
       <span class="md:hidden font-bold text-gray-500 text-xs">Precio:</span>
-      <span class="font-semibold md:font-normal">{{course.price}}</span>
+      <span class="font-semibold md:font-normal">$ {{course.price}}</span>
     </div>
 
     <div class="flex justify-between md:block text-sm">
@@ -68,7 +68,7 @@
     </div>
 
     <div class="hidden md:flex">
-      @if(course.isActive === true){
+      @if(course.isActive){
         <span class="inline-flex items-center text-green-700 text-[11px] font-bold bg-green-100 px-2 py-0.5 rounded-full">Activo</span>
       } @else {
         <span class="inline-flex items-center text-red-700 text-[11px] font-bold bg-red-100 px-2 py-0.5 rounded-full">Inactivo</span>
@@ -79,9 +79,9 @@
     <div class="flex gap-2 md:justify-center border-t md:border-none pt-2 md:pt-0 mt-1 md:mt-0">
       <button (click)="editCourse()"class="text-blue-600 text-xs font-semibold hover:underline">Editar</button>
       @if(course.isActive){
-        <button class="text-red-600 text-xs font-semibold hover:underline">Deshabilitar</button>
+        <button (click)="editAct()" class="text-red-600 text-xs font-semibold hover:underline">Deshabilitar</button>
       } @else { 
-        <button class="text-green-600 text-xs font-semibold hover:underline">Habilitar</button>
+        <button (click)="editAct()" class="text-green-600 text-xs font-semibold hover:underline">Habilitar</button>
       }
       
     </div>

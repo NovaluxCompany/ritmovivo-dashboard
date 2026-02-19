@@ -1,5 +1,5 @@
 export class CourseInterface {
-  id: number = 0;
+  _id: string = '';
   name: string = '';
   instructor: string = '';
   duration: string = '';
@@ -8,10 +8,11 @@ export class CourseInterface {
   day: string = '';
   time: string = ''
   location: string = '';
-  gender: string = '';
+  genre: string = '';
   level: string = '';
-  promo2x1: boolean = false;
+  promotion: boolean = false;
   capacity: number = 0;
+  availableSlots: number = 0;
   startDate: string = '';
-  isActive: boolean = false;
+  isActive: boolean = true;
 }

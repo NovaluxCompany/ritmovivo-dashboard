@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { CourseInterface } from '../models/curso.interface';
 import { environment } from '../../../../environments/environment';
+import { checkToken } from '../interceptor/token-interceptor';
+import { isActive } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -39,54 +41,72 @@ export class ModalCursoService {
   }
 
   insertInfo(
-    name: string, instructor: string, duration: string, 
-    price: number, color: string, day: string, 
-    time: string, location: string, gender: string,
-    level: string, promo: boolean, capacity: number,
-    startDate: string){
-      
-      return this._http.post<CourseInterface>(this.urlChange('create'),
-        {
-          name,
-          instructor,
-          duration,
-          price,
-          color,
-          day,
-          time,
-          location,
-          gender,
-          level,
-          promo,
-          capacity,
-          startDate
-        })
-    }
+  name: string, instructor: string, duration: string, 
+  price: number, color: string, day: string, 
+  time: string, location: string, genre: string,
+  level: string, promotion: boolean, capacity: number,
+  startDate: string
+) {
+  const body = {
+    name: name.trim(),
+    instructor: instructor.trim(),
+    duration: duration,
+    price: Number(price),
+    color: color || '#000000',
+    day: day,
+    time: time,
+    location: location,
+    genre: genre,
+    level: level,
+    promotion: Boolean(promotion),
+    capacity: Number(capacity),
+    availableSlots: Number(capacity),
+    startDate: new Date(startDate).toISOString() 
+  };
+
+  const options = {
+    context: checkToken() 
+  };
+
+  return this._http.post<CourseInterface>(
+    this.urlChange('create'), 
+    body, 
+    options
+  );
+}
   
   editInfo(
     id: string, name: string, instructor: string, duration: string, 
-    price: number, color: string, day: string, 
-    time: string, location: string, gender: string,
-    level: string, promo: boolean, capacity: number,
-    startDate: string
+  price: number, color: string, day: string, 
+  time: string, location: string, genre: string,
+  level: string, promotion: boolean, capacity: number,
+  startDate: string
   ){
+
+  const body = {
+    name: name.trim(),
+    instructor: instructor.trim(),
+    duration: duration,
+    price: Number(price),
+    color: color || '#000000',
+    day: day,
+    time: time,
+    location: location,
+    genre: genre,
+    level: level,
+    promotion: Boolean(promotion),
+    capacity: Number(capacity),
+    availableSlots: Number(capacity),
+    startDate: new Date(startDate).toISOString() 
+  };
+
+    const options = {
+    context: checkToken() 
+  };
     return this._http.put<CourseInterface>(this.urlChange('edit'),
-    {
-        id,
-        name,
-        instructor,
-        duration,
-        price,
-        color,
-        day,
-        time,
-        location,
-        gender,
-        level,
-        promo,
-        capacity,
-        startDate
-    })
+    body,
+    options
+  )
   }
 
   changeStatus(id: string, active: boolean){
