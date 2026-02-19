@@ -17,9 +17,8 @@ export class ModalCursoService {
   private _currentAction = signal<string>('')
   public currentAction = this._currentAction.asReadonly()
 
-  urlChange(action: string){
+  urlChange(action: string, idCourse?: string){
     let url: string = ''
-    let idCourse: string = ''
     if(action === 'create' || action === 'view'){
       return `${this._env.urlBD}/classes`
     } else if(action === 'edit') {
@@ -76,12 +75,13 @@ export class ModalCursoService {
 }
   
   editInfo(
-    id: string, name: string, instructor: string, duration: string, 
+    _id: string, name: string, instructor: string, duration: string, 
   price: number, color: string, day: string, 
   time: string, location: string, genre: string,
   level: string, promotion: boolean, capacity: number,
   startDate: string
   ){
+    
 
   const body = {
     name: name.trim(),
@@ -103,7 +103,7 @@ export class ModalCursoService {
     const options = {
     context: checkToken() 
   };
-    return this._http.put<CourseInterface>(this.urlChange('edit'),
+    return this._http.patch<CourseInterface>(this.urlChange('edit', _id),
     body,
     options
   )

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ModalCursoService } from '../../service/modal-curso.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NotificacionService } from '../../../../shared/services/notificacion.service';
+import { GestionCursos } from '../gestion-cursos/gestion-cursos';
 
 @Component({
   selector: 'app-modal-curso',
@@ -10,10 +11,12 @@ import { NotificacionService } from '../../../../shared/services/notificacion.se
   styles: ``,
 })
 export class ModalCurso {
+    private _gestCursos = inject(GestionCursos)
     private _fb = inject(FormBuilder)
     public modalService = inject(ModalCursoService)
     private _notificacionService = inject(NotificacionService)
     public formSubmitted = false;
+    public idCourseSelect: string | null = null;
 
     public cursoForm: FormGroup = this._fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
@@ -39,10 +42,13 @@ export class ModalCurso {
         case('Edit'):
           this.actionEdit()
         break
+        default:
+        console.warn('No se reconoció la acción');
       }
     }
 
   actionSave() {
+  this.idCourseSelect = null;
   this.formSubmitted = true;
 
   if (this.cursoForm.invalid) {
@@ -70,6 +76,7 @@ export class ModalCurso {
     next: (res) => {
       this._notificacionService.summonTarget('Guardado');
       this.formSubmitted = false;
+      this._gestCursos.loadCourses()
       this.modalService.closeModal()
     },
     error: (err) => {
@@ -79,16 +86,47 @@ export class ModalCurso {
   });
 }
 
-    actionEdit(){
-      if (this.cursoForm.invalid) {
-        this.cursoForm.markAllAsTouched();
-        return; 
-      } else {
-        this._notificacionService.summonTarget('Edición')
+  actionEdit() { 
+      
+  this.formSubmitted = true;
+  if (this.cursoForm.invalid) {
+    this.cursoForm.markAllAsTouched();
+    return;
+  }
+
+  const rawData = this.cursoForm.value;
+  
+  if (this.idCourseSelect) {
+    this.modalService.editInfo(
+      this.idCourseSelect,
+      rawData.name,
+      rawData.instructor,
+      rawData.duration,
+      Number(rawData.price),
+      rawData.color,
+      rawData.day,
+      rawData.time,
+      rawData.location,
+      rawData.genre,
+      rawData.level,
+      rawData.promotion,
+      Number(rawData.capacity),
+      rawData.startDate
+    ).subscribe({
+      next: (res) => {
+        this._notificacionService.summonTarget('Actualizado Correctamente');
         this.formSubmitted = false;
+        this._gestCursos.loadCourses()
         this.modalService.closeModal();
+        this.idCourseSelect = null;
+      },
+      error: (err) => {
+        console.error('Error al editar:', err);
+        this._notificacionService.summonTarget('Error al actualizar');
       }
-    }
+    });
+  }
+}
 }
 
 
