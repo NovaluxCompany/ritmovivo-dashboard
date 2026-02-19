@@ -1,22 +1,22 @@
 import { Component, inject, signal } from '@angular/core';
-import { ModalCursoService } from '../../service/modal-curso.service';
-import { ModalCurso } from "../modal-curso/modal-curso";
-import { CursoService } from '../../service/curso.service';
-import { CourseInterface } from '../../models/curso.interface';
+import { ModalCourseService } from '../../service/modal-course.service';
+import { ModalCourse } from "../modal-course/modal-course";
+import { CourseService } from '../../service/course.service';
+import { CourseInterface } from '../../models/course.interface';
 import { NotificacionService } from '../../../../shared/services/notificacion.service';
 import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-gestion-cursos',
-  imports: [ModalCurso],
-  templateUrl: './gestion-cursos.html',
+  imports: [ModalCourse],
+  templateUrl: './gestion-course.html',
   styles: ``,
 })
-export class GestionCursos {
-  @ViewChild(ModalCurso) modalComponent!: ModalCurso;
-  private _modalService =  inject(ModalCursoService)
+export class GestionCourse {
+  @ViewChild(ModalCourse) modalComponent!: ModalCourse;
+  private _modalService =  inject(ModalCourseService)
   private _notificationService = inject(NotificacionService)
-  private _cursoService = inject(CursoService)
+  private _courseService = inject(CourseService)
   public courses = signal<CourseInterface[]>([]);
 
   ngOnInit() {
@@ -24,7 +24,7 @@ export class GestionCursos {
   }
 
   loadCourses(){
-    this._cursoService.viewInfo().subscribe({
+    this._courseService.viewInfo().subscribe({
       next: (data) => {
         this.courses.set(data)
       },
@@ -35,12 +35,11 @@ export class GestionCursos {
   openCreate(){
     this.modalComponent.idCourseSelect = null
     this._modalService.openModal('Create')
-    this.loadCourses()
     this.prepareAdd()
   }
 
   prepareAdd(){
-    this.modalComponent.cursoForm.patchValue({
+    this.modalComponent.courseForm.patchValue({
     name: '',
     instructor: '',
     duration: '',
@@ -57,19 +56,6 @@ export class GestionCursos {
   });
   }
 
-  editCourse(course: CourseInterface){
-    this._modalService.openModal('Edit');
-    this.modalComponent.idCourseSelect = course._id;
-    this.loadCourses()
-    this.prepareEdit(course)
-  }
-
-  editAct(){
-    this._notificationService.summonTarget('Habilitado')
-    this.loadCourses()
-  }
-
-  
   prepareEdit(course: CourseInterface){
     this._modalService.openModal('Edit')
     this.modalComponent.idCourseSelect = course._id
@@ -87,7 +73,7 @@ export class GestionCursos {
         formattedTime = course.time.substring(0, 5); 
       }
 
-    this.modalComponent.cursoForm.patchValue({
+    this.modalComponent.courseForm.patchValue({
     name: course.name,
     instructor: course.instructor,
     duration: course.duration,
@@ -104,5 +90,27 @@ export class GestionCursos {
   });
   }
 
-  
+  editCourse(course: CourseInterface){
+    this._modalService.openModal('Edit');
+    this.modalComponent.idCourseSelect = course._id;
+    this.loadCourses()
+    this.prepareEdit(course)
+  }
+
+ toggleAct(course: CourseInterface) {
+  const currentStatus = course.isActive !== undefined ? course.isActive : (course as any).active;
+  const newState = !currentStatus;
+
+  this._courseService.changeStatus(course._id, newState).subscribe({
+    next: (res) => {
+      this._notificationService.summonTarget(newState ? 'Habilitado' : 'Deshabilitado');
+      this.loadCourses();
+    },
+    error: (err) => {
+      console.error('Error detallado:', err.error.message);
+      this._notificationService.summonTarget('Error');
+    }
+  });
+}
+
 }

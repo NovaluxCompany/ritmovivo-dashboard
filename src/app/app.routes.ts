@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { Login } from './auth/login/login';
 import { LoginGuardian } from '../app/core/guard/login-guard';
-import { GestionCursos } from './modules/cursos/components/gestion-cursos/gestion-cursos';
+import { GestionCourse } from './modules/cursos/components/gestion-course/gestion-course';
 export const routes: Routes = [
     {path: '', component: Login},
-    {path: 'cursos', component: GestionCursos, canActivate:[LoginGuardian]}
+    {path: 'cursos', component: GestionCourse, canActivate:[LoginGuardian]}
 
     //{path: '**'}
 ];

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { CourseInterface } from '../models/curso.interface';
+import { CourseInterface } from '../models/course.interface';
 import { environment } from '../../../../environments/environment';
 import { checkToken } from '../interceptor/token-interceptor';
 import { isActive } from '@angular/router';
@@ -8,7 +8,7 @@ import { isActive } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
-export class ModalCursoService {
+export class ModalCourseService {
   private _http = inject(HttpClient)
   private _env = environment
 
@@ -107,13 +107,5 @@ export class ModalCursoService {
     body,
     options
   )
-  }
-
-  changeStatus(id: string, active: boolean){
-    return this._http.patch<CourseInterface>(this.urlChange('edit-status'),
-  {
-    id,
-    active
-  })
   }
 }

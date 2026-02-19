@@ -1,5 +1,5 @@
 @if (modalService.isOpen()) {
-<form [formGroup]="cursoForm">
+<form [formGroup]="courseForm">
     <div id="default-modal" tabindex="-1" aria-hidden="true" 
          class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full bg-black/60 backdrop-blur-sm p-4">
         
@@ -29,7 +29,7 @@
                             <input 
                             formControlName="name"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
-                            @if (formSubmitted && cursoForm.get('name')?.invalid) {
+                            @if (formSubmitted && courseForm.get('name')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">El nombre es obligatorio</span>
                             }
                         </div>
@@ -40,7 +40,7 @@
                             <input 
                             formControlName="instructor"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
-                            @if (formSubmitted && cursoForm.get('instructor')?.invalid) {
+                            @if (formSubmitted && courseForm.get('instructor')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">El instructor es obligatorio</span>
                             }
                         </div>
@@ -51,7 +51,7 @@
                             <input 
                             formControlName="level"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
-                            @if (formSubmitted && cursoForm.get('level')?.invalid) {
+                            @if (formSubmitted && courseForm.get('level')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">El nivel es obligatorio</span>
                             }
                         </div>
@@ -61,12 +61,27 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div>
-                            <label
-                            class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Día</label>
-                            <select formControlName="day" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none">
-                                <option>Lunes</option><option>Martes</option><option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sábado</option><option>Domingo</option>
+                            <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                Día
+                            </label>
+                            <select 
+                                formControlName="day" 
+                                [class.border-red-500]="formSubmitted && courseForm.get('day')?.invalid"
+                                class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none transition-colors">
+                                
+                                <option value="" disabled selected>Selecciona un día</option>
+                                <option value="Lunes">Lunes</option>
+                                <option value="Martes">Martes</option>
+                                <option value="Miércoles">Miércoles</option>
+                                <option value="Jueves">Jueves</option>
+                                <option value="Viernes">Viernes</option>
+                                <option value="Sábado">Sábado</option>
+                                <option value="Domingo">Domingo</option>
                             </select>
+
+                            @if (formSubmitted && courseForm.get('day')?.invalid) {
+                                <span class="text-xs text-red-500 mt-1 block">El día es obligatorio</span>
+                            }
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
@@ -74,7 +89,7 @@
                             <input 
                             formControlName="time"
                             type="time" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none">
-                            @if (formSubmitted && cursoForm.get('time')?.invalid) {
+                            @if (formSubmitted && courseForm.get('time')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">La hora es obligatoria</span>
                             }
                         </div>
@@ -84,7 +99,7 @@
                             <input 
                             formControlName="duration"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none" >
-                            @if (formSubmitted && cursoForm.get('duration')?.invalid) {
+                            @if (formSubmitted && courseForm.get('duration')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">La duración es obligatoria</span>
                             }
                         </div>
@@ -94,7 +109,7 @@
                             <input 
                             formControlName="location"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none" >
-                            @if (formSubmitted && cursoForm.get('location')?.invalid) {
+                            @if (formSubmitted && courseForm.get('location')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">La ubicación es obligatoria</span>
                             }
                         </div>
@@ -112,7 +127,7 @@
                                 formControlName="price" min="0"
                                 type="number" class="w-full p-3 pl-8 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none" placeholder="0.00">
                             </div>
-                            @if (formSubmitted && cursoForm.get('price')?.invalid) {
+                            @if (formSubmitted && courseForm.get('price')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">El precio es obligatorio</span>
                             }
                         </div>
@@ -122,7 +137,7 @@
                             <input 
                             formControlName="capacity"
                             type="number" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none">
-                            @if (formSubmitted && cursoForm.get('capacity')?.invalid) {
+                            @if (formSubmitted && courseForm.get('capacity')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">La capacidad es obligatoria</span>
                             }
                         </div>
@@ -155,7 +170,7 @@
                             <input type="text" 
                                 formControlName="genre" 
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
-                            @if (formSubmitted && cursoForm.get('genre')?.invalid) {
+                            @if (formSubmitted && courseForm.get('genre')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">El genero es obligatorio</span>
                             }
                         </div>
@@ -167,7 +182,7 @@
                             <input type="date" 
                                 formControlName="startDate" 
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none">
-                            @if (formSubmitted && cursoForm.get('startDate')?.invalid) {
+                            @if (formSubmitted && courseForm.get('startDate')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">La fecha de inicio es obligatoria</span>
                             }    
                         </div>
