@@ -3,7 +3,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
-import { tokenInterceptor } from './modules/cursos/interceptor/token-interceptor';
+import { tokenInterceptor } from './core/interceptor/token-interceptor';
 
 import { routes } from './app.routes';
 

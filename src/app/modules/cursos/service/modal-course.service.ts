@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { CourseInterface } from '../models/course.interface';
 import { environment } from '../../../../environments/environment';
-import { checkToken } from '../interceptor/token-interceptor';
+import { checkToken } from '../../../core/interceptor/token-interceptor';
+
+
 
 @Injectable({
   providedIn: 'root',
@@ -12,22 +14,23 @@ export class ModalCourseService {
   private _env = environment
 
   private _isOpen = signal(false);
-  public isOpen = this._isOpen.asReadonly();
+  isOpen = this._isOpen.asReadonly();
   private _currentAction = signal<string>('')
   public currentAction = this._currentAction.asReadonly()
 
+  bodyUrl = {
+    create: () => `${this._env.urlBD}/classes`,
+    view: () => `${this._env.urlBD}/classes`,
+    edit: (id: string) => `${this._env.urlBD}/classes/${id}`,
+    'edit-status': (id: string) => `${this._env.urlBD}/classes/${id}/status`
+  };
+
+
   urlChange(action: string, idCourse?: string){
-    let url: string = ''
-    if(action === 'create' || action === 'view'){
-      return `${this._env.urlBD}/classes`
-    } else if(action === 'edit') {
-      return `${this._env.urlBD}/classes/${idCourse}`
-    } else if(action === 'edit-status'){
-      return `${this._env.urlBD}/classes/${idCourse}/status`
-    } else {
-      return `${this._env.urlBD}`
-    }
+    const actionFn = (this.bodyUrl as any)[action];
+    return actionFn(idCourse);
   }
+
 
   openModal(action: string) {
     this._currentAction.set(action)
@@ -107,4 +110,6 @@ export class ModalCourseService {
     options
   )
   }
+
+    
 }

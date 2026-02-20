@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { CourseInterface } from '../models/course.interface';
-import { checkToken} from '../interceptor/token-interceptor';
+import { checkToken} from '../../../core/interceptor/token-interceptor';
 import { ModalCourseService } from './modal-course.service';
 
 @Injectable({

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../core/service/auth.service';
+import { AuthService } from './service/auth.service';
 import { Router } from '@angular/router';
 import { TokenService } from '../../core/service/token.service';
 
