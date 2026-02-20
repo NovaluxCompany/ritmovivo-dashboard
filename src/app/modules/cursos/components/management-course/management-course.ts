@@ -39,21 +39,7 @@ export class ManagementCourse {
   }
 
   prepareAdd(){
-    this.modalComponent.courseForm.patchValue({
-    name: '',
-    instructor: '',
-    duration: '',
-    price: '',
-    color: '',
-    genre: '',
-    day: '',
-    time: '',
-    location: '',
-    level: '',
-    promotion: '',
-    capacity: '',
-    startDate: ''
-  });
+    this.modalComponent.courseForm.reset()
   }
 
   prepareEdit(course: CourseInterface){
