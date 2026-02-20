@@ -15,11 +15,11 @@ export class ModalCourse {
     private _gestCourse = inject(ManagementCourse)
     private _notificacionService = inject(NotificacionService)
     private _fb = inject(FormBuilder)
-    public modalService = inject(ModalCourseService)
-    public formSubmitted = false;
-    public idCourseSelect: string | null = null;
+    modalService = inject(ModalCourseService)
+    formSubmitted = false;
+    idCourseSelect: string | null = null;
 
-    public courseForm: FormGroup = this._fb.group({
+    courseForm: FormGroup = this._fb.group({
     name: ['', [Validators.required, Validators.minLength(3)]],
     instructor: ['', Validators.required],
     duration: ['', Validators.required],
