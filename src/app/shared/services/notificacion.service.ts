@@ -1,35 +1,43 @@
 import { inject, Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
+interface NotificationConfig {
+  message: string;
+  borderColor: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class NotificacionService {
+  bodyNotificacion: Record<string, () => NotificationConfig> = {
+  'Guardado': () => ({
+    message: '¡Curso guardado con éxito!',
+    borderColor: '!border-green-500'
+  }),
+  'Edición': () => ({
+    message: '¡Curso editado con éxito!',
+    borderColor: '!border-green-500'
+  }),
+  'Habilitado': () => ({
+    message: '¡Curso habilitado con éxito!',
+    borderColor: '!border-blue-500'
+  }),
+  'Deshabilitado': () => ({
+    message: '¡Curso deshabilitado con éxito!',
+    borderColor: '!border-blue-500'
+  }),
+  'Error': () => ({
+    message: 'Hubo un problema al procesar la solicitud.',
+    borderColor: '!border-red-500'
+  })
+};
+
   private toastr = inject(ToastrService)
 
   summonTarget(action: string) {
-    let borderColor = '';
-    let message = `¡Operación de ${action} realizada con éxito!`;
-
-    switch (action) {
-      case 'Guardado':
-      case 'Edición':
-        message = `¡Operación de ${action} realizada con éxito!`;
-        borderColor = '!border-green-500';
-        break;
-
-      case 'Habilitado':
-      case 'Deshabilitado':
-        message = `¡Curso ${action} con éxito`
-        borderColor = '!border-blue-500';
-        break;
-
-      case 'Error':
-        borderColor = '!border-red-500';
-        message = 'Hubo un problema al procesar la solicitud.';
-        break;
-    }
-
+    const configMsg = this.bodyNotificacion[action]
+    const { message, borderColor } = configMsg();
+    
     const toastConfig = {
       timeOut: 2500,
       progressBar: true,

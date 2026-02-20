@@ -104,14 +104,24 @@
                             }
                         </div>
                         <div class="md:col-span-3">
+                            <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Lugar / Plataforma</label>
-                            <input 
-                            formControlName="location"
-                            type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none" >
+                                Lugar
+                            </label>
+                            <select 
+                                formControlName="location" 
+                                [class.border-red-500]="formSubmitted && courseForm.get('location')?.invalid"
+                                class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none transition-colors">
+                                
+                                <option value="" disabled selected>Selecciona el lugar</option>
+                                <option value="Social Club">Social Club</option>
+                                <option value="Ritmo Vivo">Ritmo Vivo</option>
+                            </select>
+
                             @if (formSubmitted && courseForm.get('location')?.invalid) {
-                                <span class="text-xs text-red-500 mt-1 block">La ubicación es obligatoria</span>
+                                <span class="text-xs text-red-500 mt-1 block">El lugar es obligatorio</span>
                             }
+                        </div>
                         </div>
                     </div>
 
@@ -143,10 +153,25 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                Color</label>
-                            <input 
-                            formControlName="color"
-                            type="color" class="w-full h-[50px] p-1 bg-gray-50 border border-gray-300 rounded-xl cursor-pointer dark:bg-gray-700/50 dark:border-gray-600">
+                                Color
+                            </label>
+                            <select 
+                                formControlName="color" 
+                                [class.border-red-500]="formSubmitted && courseForm.get('color')?.invalid"
+                                class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none transition-colors">
+                                
+                                <option value="" disabled selected>Selecciona un color</option>
+                                <option value="red">Rojo</option>
+                                <option value="purple">Púrpura</option>
+                                <option value="orange">Naranja</option>
+                                <option value="green">Verde</option>
+                                <option value="blue">Azul</option>
+                                <option value="special">Especial</option>
+                            </select>
+
+                            @if (formSubmitted && courseForm.get('color')?.invalid) {
+                                <span class="text-xs text-red-500 mt-1 block">El color es obligatorio</span>
+                            }
                         </div>
                     </div>
 
