@@ -1,0 +1,27 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { ReportInterface } from '../report.interface';
+import { environment } from '../../../../environments/environment';
+import { checkToken } from '../../../core/interceptor/token-interceptor';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ModalReportService {
+  private _http = inject(HttpClient)
+  private _env = environment
+  private _isOpen = signal(false);
+  isOpen = this._isOpen.asReadonly();
+
+  viewCourseReportInfo(){
+    return this._http.get<ReportInterface[]>(this._env.urlBD + '/reports/payments', {context: checkToken()})
+  }
+  
+  openModal() {
+    this._isOpen.set(true);
+  }
+
+  closeModal() {
+    this._isOpen.set(false);
+  }
+}
