@@ -7,7 +7,7 @@ import { checkToken } from '../../../core/interceptor/token-interceptor';
 @Injectable({
   providedIn: 'root',
 })
-export class ModalReportService {
+export class ModalPaymentsReportService {
   private _http = inject(HttpClient)
   private _env = environment
   private _isOpen = signal(false);

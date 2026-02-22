@@ -1,20 +1,21 @@
-import { ModalReportService } from './modal-report/modal-report.service';
+import { ModalPaymentsReportService } from './modal-payments/modal-payments-report.service';
 import { Component, inject, signal } from '@angular/core';
 import { ReportsService } from './reports.service';
 import { ReportInterface } from './report.interface';
-import { ModalReport } from './modal-report/modal-report';
+import { ModalPaymentsReport } from './modal-payments/modal-payments-report';
+
 
 @Component({
   selector: 'app-reports',
-  imports: [ModalReport],
+  imports: [ModalPaymentsReport],
   templateUrl: './reports.html',
   styles: ``,
 })
 export class Reports {
-  private _modalReportService = inject(ModalReportService)
+  private _modalReportService = inject(ModalPaymentsReportService)
   private _reportService = inject(ReportsService)
   public reports = signal<ReportInterface[]>([]);
-  modalReportService = inject(ModalReportService)
+  modalReportService = inject(ModalPaymentsReportService)
 
 
   ngOnInit() {
