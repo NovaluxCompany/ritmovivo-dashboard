@@ -1,6 +1,6 @@
 @if (modalReportService.isOpen()) {
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm p-4">
-  <div class="relative w-full max-w-5xl bg-white rounded-lg shadow dark:bg-gray-800 border dark:border-gray-700">
+  <div class="relative w-full max-w-7xl bg-white rounded-lg shadow dark:bg-gray-800 border dark:border-gray-700">
     
     <div class="flex items-center justify-between p-4 border-b dark:border-gray-700">
       <h3 class="text-xl font-bold text-gray-900 dark:text-white">Detalles de Clases</h3>
@@ -17,7 +17,10 @@
             <th class="px-4 py-3 border-b dark:border-gray-600">Horario</th>
             <th class="px-4 py-3 border-b dark:border-gray-600">Fecha Inicio</th>
             <th class="px-4 py-3 border-b dark:border-gray-600">Nivel/Género</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Acompañantes</th>
+            <th class="px-4 py-3 border-b dark:border-gray-600">Nombre Acompañane</th>
+            <th class="px-4 py-3 border-b dark:border-gray-600">Id de acompañante</th>
+            <th class="px-4 py-3 border-b dark:border-gray-600">Teléfono de acompañante</th>
+            <th class="px-4 py-3 border-b dark:border-gray-600">Correo electonico de acompañante</th>
           </tr>
         </thead>
         <tbody class="divide-y dark:divide-gray-700">
@@ -35,31 +38,44 @@
               <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
                 {{ course.level }} ({{ course.genre }})
               </td>
-              <td class="px-4 py-4">
-                <table class="w-full text-[11px] border border-gray-100 dark:border-gray-600 rounded">
-                  <thead class="bg-gray-50 dark:bg-gray-900 text-gray-500">
-                    <tr>
-                      <th class="px-2 py-1">Nombre</th>
-                      <th class="px-2 py-1">ID</th>
-                      <th class="px-2 py-1">Teléfono</th>
-                      <th class="px-2 py-1">Email</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @for (companion of course.companions; track companion.identificationNumber) {
-                      <tr class="border-t dark:border-gray-700">
-                        <td class="px-2 py-1">{{ companion.fullName }}</td>
-                        <td class="px-2 py-1">{{ companion.identificationNumber }}</td>
-                        <td class="px-2 py-1">{{ companion.phone }}</td>
-                        <td class="px-2 py-1 text-blue-500">{{ companion.email }}</td>
-                      </tr>
-                    } @empty {
-                      <tr>
-                        <td colspan="4" class="px-2 py-1 text-center italic text-gray-400">Sin acompañantes</td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
+              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
+              <div class="flex flex-col gap-1">
+                @for (companion of course.companions; track companion.identificationNumber) {
+                  <span>{{ companion.fullName }}</span>
+                } @empty {
+                  <span class="italic text-gray-400">Sin acompañantes</span>
+                }
+              </div>
+              </td>
+
+              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
+              <div class="flex flex-col gap-1">
+                @for (companion of course.companions; track companion.identificationNumber) {
+                  <span>{{ companion.identificationNumber }}</span>
+                } @empty {
+                  <span class="italic text-gray-400">-</span>
+                }
+              </div>
+              </td>
+
+              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
+              <div class="flex flex-col gap-1">
+                @for (companion of course.companions; track companion.identificationNumber) {
+                  <span>{{ companion.phone }}</span>
+                } @empty {
+                  <span class="italic text-gray-400">-</span>
+                }
+              </div>
+              </td>
+
+              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
+              <div class="flex flex-col gap-1">
+                @for (companion of course.companions; track companion.identificationNumber) {
+                  <span>{{ companion.email }}</span>
+                } @empty {
+                  <span class="italic text-gray-400">-</span>
+                }
+              </div>
               </td>
             </tr>
           }
