@@ -1,14 +1,14 @@
-import { ModalPaymentsReportService } from './modal-payments/modal-payments-report.service';
+import { ModalPaymentsReportService } from '../../service/modal-payments-report.service';
 import { Component, inject, signal } from '@angular/core';
-import { ReportsService } from './reports.service';
-import { ReportInterface } from './report.interface';
-import { ModalPaymentsReport } from './modal-payments/modal-payments-report';
+import { ReportsService } from '../../service/payment-reports.service';
+import { ReportInterface } from '../../models/payment-report.interface';
+import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
 
 
 @Component({
   selector: 'app-reports',
   imports: [ModalPaymentsReport],
-  templateUrl: './reports.html',
+  templateUrl: './payment-reports.html',
   styles: ``,
 })
 export class Reports {

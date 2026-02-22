@@ -1,5 +1,5 @@
 import { Component, inject} from '@angular/core';
-import { ModalPaymentsReportService } from './modal-payments-report.service';
+import { ModalPaymentsReportService } from '../../service/modal-payments-report.service';
 
 @Component({
   selector: 'app-modal-payments-report',
@@ -8,13 +8,13 @@ import { ModalPaymentsReportService } from './modal-payments-report.service';
   templateUrl: './modal-payments-report.html',
 })
 export class ModalPaymentsReport {
-  modalReportService = inject(ModalPaymentsReportService);
+  modalPaymentsReportService = inject(ModalPaymentsReportService);
 
   openModal(courses: any[]) {
-    this.modalReportService.openModal(courses);
+    this.modalPaymentsReportService.openModal(courses);
   }
 
   showCourses() {
-    return this.modalReportService.selectedCourses(); 
+    return this.modalPaymentsReportService.selectedCourses(); 
   }
 }

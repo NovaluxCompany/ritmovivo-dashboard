@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { ReportInterface } from '../report.interface';
+import { ReportInterface } from '../models/payment-report.interface';
 import { environment } from '../../../../environments/environment';
 import { checkToken } from '../../../core/interceptor/token-interceptor';
 

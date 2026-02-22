@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { checkToken } from '../../core/interceptor/token-interceptor';
-import { ReportInterface } from './report.interface';
+import { environment } from '../../../../environments/environment';
+import { checkToken } from '../../../core/interceptor/token-interceptor';
+import { ReportInterface } from '../models/payment-report.interface';
 
 @Injectable({
   providedIn: 'root',
