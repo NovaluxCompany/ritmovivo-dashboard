@@ -3,48 +3,72 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Prueba tabla
+                    Pago en efectivo
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Prueba tabla
+                    Nombre completo
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Prueba tabla
+                    Numero de identificación
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Prueba tabla
+                    Correo electrónico
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Telefono
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Fecha nacimiento
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Cuenta de cursos
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Cantidad
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Fecha de pago
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Lugar
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
+          @for (report of reports(); track $index) {
+             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td class="px-6 py-4">
-                    Silver
+                    {{report.cashPayment}}
                 </td>
                 <td class="px-6 py-4">
-                    Laptop
+                    {{report.bookingInfo.fullName}}
                 </td>
                 <td class="px-6 py-4">
-                    $2999
+                    {{report.bookingInfo.identificationNumber}}
                 </td>
+                <td class="px-6 py-4">
+                    {{report.bookingInfo.email}}
+                </td>
+                <td class="px-6 py-4">
+                    {{report.bookingInfo.phone}}
+                </td>
+                <td class="px-6 py-4">
+                    {{report.bookingInfo.birthDate}}
+                </td>
+                <td class="px-6 py-4">
+                    {{report.coursesCount}}
+                </td>
+                <td class="px-6 py-4">
+                    {{report.amount}}
+                </td>
+                <td class="px-6 py-4">
+                    {{report.paymentDate}}
+                </td>
+                <td class="px-6 py-4">
+                    {{report.location}}
+                
             </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Tablet
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
+          }
         </tbody>
     </table>
 </div>
