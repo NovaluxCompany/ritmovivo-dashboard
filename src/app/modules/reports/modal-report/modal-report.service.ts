@@ -12,12 +12,15 @@ export class ModalReportService {
   private _env = environment
   private _isOpen = signal(false);
   isOpen = this._isOpen.asReadonly();
+  selectedCourses = signal<any[]>([]);
+  
 
   viewCourseReportInfo(){
     return this._http.get<ReportInterface[]>(this._env.urlBD + '/reports/payments', {context: checkToken()})
   }
-  
-  openModal() {
+
+  openModal(courses: any[]) {
+    this.selectedCourses.set(courses);
     this._isOpen.set(true);
   }
 

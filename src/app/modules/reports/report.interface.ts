@@ -18,7 +18,14 @@ export interface Course {
   startDate: string | null;
   level: string;
   mainPerson: Person;
-  companions: any[];
+  companions: Companion[];
+}
+
+export interface Companion {
+  fullName: string;
+  identificationNumber: string;
+  phone: string;
+  email: string;
 }
 
 export interface ReportInterface {
