@@ -21,10 +21,10 @@ export class EnrolledReport {
     this.loadEnrolledReport({}); 
   }
 
-  handleSave(filtros: any) {
-    console.log('Botón presionado: Filtrando ahora...', filtros);
-    this._storage.saveFilters(filtros);
-    this.loadEnrolledReport(filtros);
+  handleSave(filters: any) {
+    console.log('Botón presionado: Filtrando ahora...', filters);
+    this._storage.saveFilters(filters);
+    this.loadEnrolledReport(filters);
   }
 
   handleClear() {

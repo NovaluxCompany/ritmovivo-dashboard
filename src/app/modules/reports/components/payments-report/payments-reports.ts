@@ -29,10 +29,10 @@ export class PaymentsReport {
     this._modalReportService.openModal(courses);
   }
 
-  handleSave(filtros: any) {
-    console.log('Botón presionado: Filtrando ahora...', filtros)
-    this._storage.saveFilters(filtros);
-    this.loadPaymentReport(filtros);
+  handleSave(filters: any) {
+    console.log('Botón presionado: Filtrando ahora...', filters)
+    this._storage.saveFilters(filters);
+    this.loadPaymentReport(filters);
   }
 
   handleClear() {
