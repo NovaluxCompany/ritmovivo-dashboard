@@ -4,10 +4,12 @@ import { LoginGuardian } from '../app/core/guard/login-guard';
 import { ManagementCourse } from './modules/cursos/components/management-course/management-course';
 import { PaymentsReport } from './modules/reports/components/payments-report/payments-reports';
 import { EnrolledReport } from './modules/reports/components/enrolled-report/enrolled-report';
+import { FormReports } from './shared/form-reports/form-reports';
 export const routes: Routes = [
     {path: '', component: Login},
     {path: 'cursos', component: ManagementCourse, canActivate:[LoginGuardian]},
     {path: 'pagos', component: PaymentsReport, canActivate:[LoginGuardian]},
     {path: 'inscritos', component: EnrolledReport, canActivate:[LoginGuardian]},
+    {path: 'formulario-filtro', component: FormReports, canActivate:[LoginGuardian]},
     //{path: '**'}
 ];

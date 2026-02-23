@@ -3,11 +3,12 @@ import { Component, inject, signal } from '@angular/core';
 import { ReportsService } from '../../service/payment-reports.service';
 import { ReportInterface } from '../../models/payment-report.interface';
 import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
+import { FormReports } from '../../../../shared/form-reports/form-reports';
 
 
 @Component({
   selector: 'app-payments-report',
-  imports: [ModalPaymentsReport],
+  imports: [ModalPaymentsReport, FormReports],
   templateUrl: './payment-reports.html',
   styles: ``,
 })
