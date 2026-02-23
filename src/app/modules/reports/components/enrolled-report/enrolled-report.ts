@@ -3,22 +3,23 @@ import { EnrolledReportService } from '../../service/enrolled-report.service';
 import { EnrolledReportInterface } from '../../models/enrolled-report.interface';
 import { ReportStorageService } from '../../service/report-storage.service';
 import { FormReports } from '../../../../shared/form-reports/form-reports';
+import { NavigationBar } from "../../../../shared/navigation-bar/navigation-bar";
 
 @Component({
   selector: 'app-enrolled-report',
-  imports: [FormReports],
+  imports: [FormReports, NavigationBar],
   templateUrl: './enrolled-report.html',
   styles: ``,
 })
 export class EnrolledReport {
   private _enrrolledReportService = inject(EnrolledReportService);
   private _storage = inject(ReportStorageService);
-  
+
   enrolleds = signal<EnrolledReportInterface[]>([]);
   showForm = signal<boolean>(true);
 
   ngOnInit() {
-    this.loadEnrolledReport({}); 
+    this.loadEnrolledReport({});
   }
 
   handleSave(filters: any) {

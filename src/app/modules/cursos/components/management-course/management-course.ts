@@ -5,10 +5,11 @@ import { CourseService } from '../../service/course.service';
 import { CourseInterface } from '../../models/course.interface';
 import { NotificacionService } from '../../../../shared/services/notificacion.service';
 import { ViewChild } from '@angular/core';
+import { NavigationBar } from '../../../../shared/navigation-bar/navigation-bar';
 
 @Component({
   selector: 'app-gestion-cursos',
-  imports: [ModalCourse],
+  imports: [ModalCourse, NavigationBar],
   templateUrl: './management-course.html',
   styles: ``,
 })
@@ -56,7 +57,7 @@ export class ManagementCourse {
 
       let formattedTime = '';
       if (course.time) {
-        formattedTime = course.time.substring(0, 5); 
+        formattedTime = course.time.substring(0, 5);
       }
 
     this.modalComponent.courseForm.patchValue({

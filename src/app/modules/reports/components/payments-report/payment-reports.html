@@ -1,52 +1,40 @@
-<app-form-reports 
-    (onSave)="handleSave($event)" 
-    (onClear)="handleClear()">
-  </app-form-reports>
+<app-navigation-bar #nav></app-navigation-bar>
 
+<div
+  class="p-4 transition-all duration-300"
+  [class.sm:ml-64]="nav.isExpanded()"
+  [class.sm:ml-20]="!nav.isExpanded()">
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <div class="mb-6 mt-2">
+    <app-form-reports
+      (onSave)="handleSave($event)"
+      (onClear)="handleClear()">
+    </app-form-reports>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg border dark:border-gray-700">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3">
-                    Pago en efectivo
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Nombre completo
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Numero de identificación
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Correo electrónico
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Telefono
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Fecha nacimiento
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Cuenta de cursos
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Cantidad
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Fecha de pago
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Lugar
-                </th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">Pago en efectivo</th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">Nombre completo</th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">ID / Identificación</th>
+                <th scope="col" class="px-6 py-3">Correo electrónico</th>
+                <th scope="col" class="px-6 py-3">Teléfono</th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">Fecha nacimiento</th>
+                <th scope="col" class="px-6 py-3 text-center">Cursos</th>
+                <th scope="col" class="px-6 py-3">Cantidad</th>
+                <th scope="col" class="px-6 py-3 whitespace-nowrap">Fecha de pago</th>
+                <th scope="col" class="px-6 py-3">Lugar</th>
             </tr>
         </thead>
         <tbody>
           @for (report of payments(); track $index) {
              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 text-center">
                     {{report.cashPayment}}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
                     {{report.bookingInfo.fullName}}
                 </td>
                 <td class="px-6 py-4">
@@ -58,27 +46,29 @@
                 <td class="px-6 py-4">
                     {{report.bookingInfo.phone}}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 whitespace-nowrap">
                     {{report.bookingInfo.birthDate}}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 text-center">
                   <button type="button" (click)="openModal(report.courses)"
                           class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                       Ver detalle
                   </button>
-              </td>
-                <td class="px-6 py-4">
-                    {{report.amount}}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                    ${{report.amount}}
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
                     {{report.paymentDate}}
                 </td>
                 <td class="px-6 py-4">
                     {{report.location}}
-                
-            </tr>
+                </td>
+             </tr>
           }
         </tbody>
     </table>
+  </div>
 </div>
+
 <app-modal-payments-report></app-modal-payments-report>

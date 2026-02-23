@@ -5,11 +5,12 @@ import { ReportInterface } from '../../models/payment-report.interface';
 import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
 import { FormReports } from '../../../../shared/form-reports/form-reports';
 import { ReportStorageService } from '../../service/report-storage.service';
+import { NavigationBar } from '../../../../shared/navigation-bar/navigation-bar';
 
 
 @Component({
   selector: 'app-payments-report',
-  imports: [ModalPaymentsReport, FormReports],
+  imports: [ModalPaymentsReport, FormReports, NavigationBar],
   templateUrl: './payment-reports.html',
   styles: ``,
 })
@@ -19,7 +20,7 @@ export class PaymentsReport {
   private _paymentReportService = inject(ReportsService);
   payments = signal<ReportInterface[]>([]);
   modalReportService = inject(ModalPaymentsReportService)
-  
+
 
   ngOnInit() {
     this.loadPaymentReport({});
