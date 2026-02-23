@@ -1,6 +1,6 @@
-export interface EnrolledReport {
+export interface EnrolledReportInterface {
   enrollmentDate: string;
-  coursename: string;
+  courseName: string;
   location: string;
   genre: string;
   level: string;

@@ -1,1 +1,56 @@
-<p>enrolled-report works!</p>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg border dark:border-gray-700">
+    <table class="w-full text-xs text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-[11px] text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-3 py-2 whitespace-nowrap">Fecha insc.</th>
+                <th scope="col" class="px-3 py-2 whitespace-nowrap">Curso</th>
+                <th scope="col" class="px-3 py-2">Lugar</th>
+                <th scope="col" class="px-3 py-2">Nivel/Género</th>
+                <th scope="col" class="px-3 py-2">Instructor</th>
+                <th scope="col" class="px-3 py-2">Inicio</th>
+                <th scope="col" class="px-3 py-2">Día</th>
+                <th scope="col" class="px-3 py-2">Hora</th>
+                                <th scope="col" class="px-3 py-2">ID Comprador</th>
+                <th scope="col" class="px-3 py-2 whitespace-nowrap">Nombre Comprador</th>
+                <th scope="col" class="px-3 py-2">Correo</th>
+                <th scope="col" class="px-3 py-2">Teléfono</th>
+                <th scope="col" class="px-3 py-2 whitespace-nowrap">Nacimiento</th>
+                <th scope="col" class="px-3 py-2">Efectivo</th>
+                <th scope="col" class="px-3 py-2">Acompañante</th>
+                <th scope="col" class="px-3 py-2 whitespace-nowrap">Nombre Acompañante</th>
+                <th scope="col" class="px-3 py-2">ID Acomp.</th>
+                <th scope="col" class="px-3 py-2">Tel. Acomp.</th>
+                <th scope="col" class="px-3 py-2">Email Acomp.</th>
+            </tr>
+        </thead>
+        <tbody>
+          @for (enrolled of enrolleds(); track $index) {
+             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="px-3 py-2 whitespace-nowrap">{{enrolled.enrollmentDate}}</td>
+                <td class="px-3 py-2 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                    {{enrolled.courseName}}
+                </td>
+                <td class="px-3 py-2">{{enrolled.location}}</td>
+                <td class="px-3 py-2 whitespace-nowrap">{{enrolled.level}} - {{enrolled.genre}}</td>
+                <td class="px-3 py-2 whitespace-nowrap">{{enrolled.instructor}}</td>
+                <td class="px-3 py-2 whitespace-nowrap">{{enrolled.courseStartDate}}</td>
+                <td class="px-3 py-2">{{enrolled.day}}</td>
+                <td class="px-3 py-2">{{enrolled.time}}</td>
+                <td class="px-3 py-2">{{enrolled.buyerIdentificationNumber}}</td>
+                <td class="px-3 py-2 font-medium whitespace-nowrap">{{enrolled.buyerFullName}}</td>
+                <td class="px-3 py-2">{{enrolled.buyerEmail}}</td>
+                <td class="px-3 py-2">{{enrolled.buyerPhone}}</td>
+                <td class="px-3 py-2">{{enrolled.buyerBirthDate}}</td>
+                <td class="px-3 py-2 text-center">
+                        {{enrolled.cashPayment}}
+                </td>
+                <td class="px-3 py-2 text-center">{{enrolled.includesPartner}}</td>
+                <td class="px-3 py-2 whitespace-nowrap">{{enrolled.companionFullName}}</td>
+                <td class="px-3 py-2">{{enrolled.companionIdentificationNumber}}</td>
+                <td class="px-3 py-2">{{enrolled.companionPhone}}</td>
+                <td class="px-3 py-2">{{enrolled.companionEmail}}</td>
+            </tr>
+          }
+        </tbody>
+    </table>
+</div>

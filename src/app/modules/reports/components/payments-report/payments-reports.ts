@@ -6,15 +6,15 @@ import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
 
 
 @Component({
-  selector: 'app-reports',
+  selector: 'app-payments-report',
   imports: [ModalPaymentsReport],
   templateUrl: './payment-reports.html',
   styles: ``,
 })
-export class Reports {
+export class PaymentsReport {
   private _modalReportService = inject(ModalPaymentsReportService)
   private _reportService = inject(ReportsService)
-  public reports = signal<ReportInterface[]>([]);
+  payments = signal<ReportInterface[]>([]);
   modalReportService = inject(ModalPaymentsReportService)
 
 
@@ -25,7 +25,7 @@ export class Reports {
   loadReports(){
     this._reportService.viewInfoReport().subscribe({
       next: (data) => {
-        this.reports.set(data)
+        this.payments.set(data)
       },
       error: (err) => console.error('Error al cargar reportes:', err)
     })
