@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styles: ``,
 })
 export class FormReports {
+  isEnrolled = input<boolean>(false);
   onSave = output<any>();
   onClear = output<void>();
 
@@ -20,12 +21,16 @@ export class FormReports {
     buyerFullName: [''],
     hasCompanion: ['no'],
     companionIdentificationNumber: [''],
-    companionFullName: ['']
+    companionFullName: [''],
+    identificationNumber: [''],
+    fullName: [''],
+    paymentDate: [''],
+    location: ['']
   });
 
   clearForm(){
     this.filterForm.reset();
-    this.onClear.emit();
+    this.onSave.emit({})
   }
 
   save() {

@@ -10,6 +10,5 @@ export const routes: Routes = [
     {path: 'cursos', component: ManagementCourse, canActivate:[LoginGuardian]},
     {path: 'pagos', component: PaymentsReport, canActivate:[LoginGuardian]},
     {path: 'inscritos', component: EnrolledReport, canActivate:[LoginGuardian]},
-    {path: 'formulario-filtro', component: FormReports, canActivate:[LoginGuardian]},
     //{path: '**'}
 ];
