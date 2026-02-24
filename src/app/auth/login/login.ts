@@ -1,44 +1,82 @@
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from './service/auth.service';
+import { Router } from '@angular/router';
+import { TokenService } from '../../core/service/token.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
-  templateUrl: './login.html',
-  styles: ``,
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule],
+  templateUrl: './login.html'
 })
+
 export class Login {
-  retry = false
-  showError: boolean = false
-  messageError: string = ''
+  showError: boolean = false;
+  messageError: string = '';
+  isLoading: boolean = false;
 
-    login(form: NgForm) {
-      const correoElectronico = form.value.correoElectronico
-      const password = form.value.password
-      const retry = false
+  private _tokenService = inject(TokenService);
+  private _authService = inject(AuthService);
+  private _router = inject(Router);
+  private _cdr = inject(ChangeDetectorRef);
+  private _fb = inject(FormBuilder);
 
-      if(!correoElectronico){
-        this.showError = true
-        this.messageError = "Incorrect username or password."
-      }
-      this.validatePassword(password)
+  form = this._fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  });
+
+  login() {
+    this.resetState();
+
+    if (!this.isFormValid()) {
+      return; 
+    }
+
+    this.executeAuthentication();
+  }
+
+  private resetState() {
+    this._tokenService.removeToken();
+    this.showError = false;
+    this.messageError = '';
+  }
+
+  private isFormValid(): boolean {
+    if (this.form.invalid) {
+      this.showError = true;
       
+      const email = this.form.get('email');
+      const password = this.form.get('password');
 
-      console.log(correoElectronico, password)
-
-    }
-
-    validatePassword(passw: string){
-      const length = /^(?=.*[0-9]).{7,}$/;
-      if(!length.test(passw)){
-        this.messageError = "The password must be longer than 6 words"
-        return this.showError = true
+      if (email?.hasError('required') || password?.hasError('required')) {
+        this.messageError = "Todos los campos son requeridos";
+      } else if (email?.hasError('email')) {
+        this.messageError = "Formato incorrecto del correo electrónico.";
+      } else if (password?.hasError('minlength')) {
+        this.messageError = "La contraseña debe tener 6 o más caracteres.";
       }
-    return
+      return false;
     }
+    return true;
+  }
 
-    validateTry(){
-      this.retry = true
-    }
+  private executeAuthentication() {
+    this.isLoading = true;
+    const { email, password } = this.form.getRawValue();
 
+    this._authService.loginDB(email!, password!).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this._router.navigate(['/cursos']);
+      },
+      error: () => {
+        this.isLoading = false;
+        this.showError = true;
+        this.messageError = "Correo electrónico y/o contraseña incorrectos";
+        this._cdr.detectChanges();
+      }
+    });
+  }
 }
