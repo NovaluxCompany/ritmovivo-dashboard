@@ -20,8 +20,9 @@ export class EnrolledReport {
 
   ngOnInit() {
     this.loadEnrolledReport({});
-  }
 
+  }
+  
   handleSave(filters: any) {
     this._storage.saveFilters(filters);
     this.loadEnrolledReport(filters);

@@ -13,11 +13,17 @@
              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
     </div>
 
-    <div class="flex flex-col">
-      <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Id de clase</label>
-      <input formControlName="classId" type="text"
-             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
-    </div>
+  <div class="flex flex-col">
+  <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Identificador de clase</label>
+  <select formControlName="classId"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
+    @for (clase of classes(); track clase.id) {
+      <option [value]="clase.id">
+        {{ clase.id }}
+      </option>
+    }
+  </select>
+  </div>
 
     <div class="flex flex-col">
       <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Identificación del comprador</label>
@@ -34,14 +40,15 @@
       <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">¿Tiene acompañante?</label>
       <select formControlName="hasCompanion"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
-        <option value="si">Sí</option>
-        <option value="no">No</option>
+        <option [value]="true">Sí</option>
+        <option [value]="false">No</option>
       </select>
     </div>
 
     <div class="hidden md:block"></div>
 
-    <div class="md:col-span-2 mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+        @if (filterForm.get('hasCompanion')?.value === 'true') {
+      <div class="md:col-span-2 mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="flex flex-col">
         <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">ID del acompañante</label>
         <input formControlName="companionIdentificationNumber" type="text"
@@ -53,6 +60,7 @@
                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
       </div>
     </div>
+    }
     } @else {
       <div class="flex flex-col">
       <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Numero de identificación</label>
@@ -73,10 +81,16 @@
     </div>
 
     <div class="flex flex-col">
-      <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Identificador de clase</label>
-      <input formControlName="classId" type="text"
-             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
-    </div>
+  <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Identificador de clase</label>
+  <select formControlName="classId"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-400 focus:border-gray-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white outline-none">
+    @for (clase of classes(); track clase.id) {
+      <option [value]="clase.id">
+        {{ clase.id }}
+      </option>
+    }
+  </select>
+  </div>
     <div class="flex flex-col">
       <label class="mb-1 text-xs font-semibold text-gray-700 dark:text-gray-300">Fecha de pago</label>
       <input formControlName="paymentDate" type="date"
