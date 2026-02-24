@@ -18,7 +18,7 @@ export class ManagementCourse {
   private _modalService =  inject(ModalCourseService)
   private _notificationService = inject(NotificacionService)
   private _courseService = inject(CourseService)
-  public courses = signal<CourseInterface[]>([]);
+  courses = signal<CourseInterface[]>([]);
 
   ngOnInit() {
     this.loadCourses();
