@@ -65,7 +65,7 @@ export class ManagementCourse {
     instructor: course.instructor,
     duration: course.duration,
     price: course.price,
-    color: course.color && course.color.startsWith('#') ? course.color : '#3b82f6',
+    color: course.color,
     genre: course.genre,
     day: course.day,
     time: formattedTime,
