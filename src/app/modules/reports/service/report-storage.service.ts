@@ -10,6 +10,10 @@ export class ReportStorageService {
     console.log("Datos del current " + JSON.stringify(data));
   }
 
+  getFilters() {
+    return this._currentFilters();
+  }
+
   clearFilters() {
     this._currentFilters.set(null);
   }

@@ -13,7 +13,7 @@ export class EnrolledReportService {
 
   viewEnrolledReportInfo(filters: any = {}) {
   let params = new HttpParams();
-  
+
   const data = filters || {};
 
   Object.keys(data).forEach(key => {
@@ -26,6 +26,24 @@ export class EnrolledReportService {
   return this._http.get<EnrolledReportInterface[]>(
     `${this._env.urlBD}/reports/enrollments`,
     { params, context: checkToken() }
+  );
+}
+
+  downloadExcelEnrolled(filters: any = {}) {
+    let params = new HttpParams();
+
+  const data = filters || {};
+
+  Object.keys(data).forEach(key => {
+    const value = data[key];
+    if (value !== null && value !== undefined && value !== '') {
+      params = params.set(key, value.toString());
+    }
+  });
+
+  return this._http.get(
+    `${this._env.urlBD}/reports/enrollments/excel`,
+    { params, context: checkToken(), responseType: 'blob' }
   );
 }
 }
