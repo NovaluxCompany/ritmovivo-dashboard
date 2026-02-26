@@ -15,7 +15,7 @@
     <button
       type="button"
       (click)="toggleForm()"
-      class="w-full flex items-center justify-between p-4 hover:bg-gray-50 rounded-xl transition-all duration-200">
+      class="w-full flex items-center justify-between p-4 hover:bg-gray-50 rounded-xl transition-all duration-200 cursor-pointer">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 bg-gradient-to-br from-[#f3592c] to-[#4ecdc4] rounded-xl flex items-center justify-center shadow-lg">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,7 +101,7 @@
                 </td>
                 <td class="px-6 py-4 text-center">
                   <button type="button" (click)="openModal(report.courses)"
-                          class="btn-primary btn-sm">
+                          class="btn-primary btn-sm cursor-pointer">
                       Ver detalle
                   </button>
                 </td>
@@ -154,7 +154,7 @@
           type="button"
           (click)="previousPage()"
           [disabled]="currentPage() === 1"
-          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
           Anterior
         </button>
         <!-- Next Button -->
@@ -162,7 +162,7 @@
           type="button"
           (click)="nextPage()"
           [disabled]="currentPage() === totalPages()"
-          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
           Siguiente
         </button>
       </div>
