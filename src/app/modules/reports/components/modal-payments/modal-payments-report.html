@@ -1,90 +1,104 @@
 @if (modalPaymentsReportService.isOpen()) {
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-sm p-4">
-  <div class="relative w-full max-w-7xl bg-white rounded-lg shadow dark:bg-gray-800 border dark:border-gray-700">
-    
-    <div class="flex items-center justify-between p-4 border-b dark:border-gray-700">
-      <h3 class="text-xl font-bold text-gray-900 dark:text-white">Detalles de Clases</h3>
-      <button (click)="modalPaymentsReportService.closeModal()" class="text-gray-400 hover:bg-gray-100 rounded-lg p-1.5">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+<div class="modal-overlay">
+  <div class="relative w-full max-w-7xl modal-content">
+
+    <div class="modal-header">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-gradient-to-br from-[#f3592c] to-[#4ecdc4] rounded-xl shadow-lg">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+          </svg>
+        </div>
+        <h3 class="modal-title">Detalles de Clases</h3>
+      </div>
+      <button (click)="modalPaymentsReportService.closeModal()"
+              class="text-gray-400 bg-transparent hover:bg-[#f3592c]/10 hover:text-[#f3592c] rounded-xl text-sm w-10 h-10 inline-flex justify-center items-center transition-all">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
       </button>
     </div>
 
-    <div class="p-4 overflow-x-auto">
-      <table class="w-full text-sm text-left border-collapse">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Clase</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Horario</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Fecha Inicio</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Nivel/Género</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Nombre Acompañane</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Id de acompañante</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Teléfono de acompañante</th>
-            <th class="px-4 py-3 border-b dark:border-gray-600">Correo electonico de acompañante</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y dark:divide-gray-700">
-          @for (course of showCourses(); track course.classId) {
-            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-              <td class="px-4 py-4 font-semibold text-blue-700 dark:text-blue-400">
-                {{ course.className }}
-              </td>
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-                {{ course.day }} - {{ course.time }}
-              </td>
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-                {{ course.startDate }}
-              </td>
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-                {{ course.level }} ({{ course.genre }})
-              </td>
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-              <div class="flex flex-col gap-1">
-                @for (companion of course.companions; track companion.identificationNumber) {
-                  <span>{{ companion.fullName }}</span>
-                } @empty {
-                  <span class="italic text-gray-400">Sin acompañantes</span>
-                }
-              </div>
-              </td>
-
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-              <div class="flex flex-col gap-1">
-                @for (companion of course.companions; track companion.identificationNumber) {
-                  <span>{{ companion.identificationNumber }}</span>
-                } @empty {
-                  <span class="italic text-gray-400">-</span>
-                }
-              </div>
-              </td>
-
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-              <div class="flex flex-col gap-1">
-                @for (companion of course.companions; track companion.identificationNumber) {
-                  <span>{{ companion.phone }}</span>
-                } @empty {
-                  <span class="italic text-gray-400">-</span>
-                }
-              </div>
-              </td>
-
-              <td class="px-4 py-4 text-gray-600 dark:text-gray-300">
-              <div class="flex flex-col gap-1">
-                @for (companion of course.companions; track companion.identificationNumber) {
-                  <span>{{ companion.email }}</span>
-                } @empty {
-                  <span class="italic text-gray-400">-</span>
-                }
-              </div>
-              </td>
+    <div class="modal-body overflow-x-auto max-h-[70vh]">
+      <div class="table-container border-0 shadow-none">
+        <table class="table">
+          <thead class="table-header">
+            <tr>
+              <th class="px-6 py-4">Clase</th>
+              <th class="px-6 py-4">Horario</th>
+              <th class="px-6 py-4">Fecha Inicio</th>
+              <th class="px-6 py-4">Nivel/Género</th>
+              <th class="px-6 py-4">Nombre Acompañante</th>
+              <th class="px-6 py-4">ID de acompañante</th>
+              <th class="px-6 py-4">Teléfono de acompañante</th>
+              <th class="px-6 py-4">Correo electrónico de acompañante</th>
             </tr>
-          }
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            @for (course of showCourses(); track course.classId) {
+              <tr class="table-row">
+                <td class="px-6 py-4 font-semibold text-gray-900">
+                  {{ course.className }}
+                </td>
+                <td class="px-6 py-4 text-gray-700">
+                  {{ course.day }} - {{ course.time }}
+                </td>
+                <td class="px-6 py-4 text-gray-700">
+                  {{ course.startDate }}
+                </td>
+                <td class="px-6 py-4">
+                  <span class="badge-info">
+                    {{ course.level }} ({{ course.genre }})
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-gray-700">
+                  <div class="flex flex-col gap-1">
+                    @for (companion of course.companions; track companion.identificationNumber) {
+                      <span>{{ companion.fullName }}</span>
+                    } @empty {
+                      <span class="italic text-gray-400">Sin acompañantes</span>
+                    }
+                  </div>
+                </td>
+
+                <td class="px-6 py-4 text-gray-700">
+                  <div class="flex flex-col gap-1">
+                    @for (companion of course.companions; track companion.identificationNumber) {
+                      <span>{{ companion.identificationNumber }}</span>
+                    } @empty {
+                      <span class="italic text-gray-400">—</span>
+                    }
+                  </div>
+                </td>
+
+                <td class="px-6 py-4 text-gray-700">
+                  <div class="flex flex-col gap-1">
+                    @for (companion of course.companions; track companion.identificationNumber) {
+                      <span>{{ companion.phone }}</span>
+                    } @empty {
+                      <span class="italic text-gray-400">—</span>
+                    }
+                  </div>
+                </td>
+
+                <td class="px-6 py-4 text-gray-700">
+                  <div class="flex flex-col gap-1">
+                    @for (companion of course.companions; track companion.identificationNumber) {
+                      <span>{{ companion.email }}</span>
+                    } @empty {
+                      <span class="italic text-gray-400">—</span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <div class="p-4 border-t dark:border-gray-700 text-right">
-      <button (click)="modalPaymentsReportService.closeModal()" class="px-6 py-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm">
+    <div class="modal-footer bg-gray-50/50 rounded-b-2xl">
+      <button (click)="modalPaymentsReportService.closeModal()" class="btn-primary">
         Cerrar
       </button>
     </div>

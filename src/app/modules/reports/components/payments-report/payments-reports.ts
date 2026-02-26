@@ -19,6 +19,7 @@ export class PaymentsReport {
   private _storage = inject(ReportStorageService);
   private _paymentReportService = inject(ReportsService);
   payments = signal<ReportInterface[]>([]);
+  showForm = signal<boolean>(true);
   modalReportService = inject(ModalPaymentsReportService)
 
 
@@ -38,6 +39,10 @@ export class PaymentsReport {
 
   handleClear() {
     this.loadPaymentReport({});
+  }
+
+  toggleForm() {
+    this.showForm.set(!this.showForm());
   }
 
   loadPaymentReport(filters: any) {
