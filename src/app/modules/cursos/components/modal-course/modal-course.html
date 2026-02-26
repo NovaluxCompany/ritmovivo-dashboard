@@ -1,11 +1,11 @@
 @if (modalService.isOpen()) {
 <form [formGroup]="courseForm">
-    <div id="default-modal" tabindex="-1" aria-hidden="true" 
+    <div id="default-modal" tabindex="-1" aria-hidden="true"
          class="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-full max-h-full bg-black/60 backdrop-blur-sm p-4">
-        
+
         <div class="relative w-full max-w-4xl max-h-full">
             <div class="relative bg-white border border-gray-200 rounded-2xl shadow-2xl dark:bg-gray-800 dark:border-gray-700 flex flex-col">
-                
+
                 <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 p-5">
                     <div class="flex items-center gap-3">
                         <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
@@ -21,12 +21,12 @@
                 </div>
 
                 <div class="p-6 space-y-6 overflow-y-auto max-h-[75vh]">
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="md:col-span-2">
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Nombre del Curso</label>
-                            <input 
+                            <input
                             formControlName="name"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
                             @if (formSubmitted && courseForm.get('name')?.invalid) {
@@ -37,7 +37,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Instructor</label>
-                            <input 
+                            <input
                             formControlName="instructor"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
                             @if (formSubmitted && courseForm.get('instructor')?.invalid) {
@@ -48,7 +48,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Nivel</label>
-                            <input 
+                            <input
                             formControlName="level"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
                             @if (formSubmitted && courseForm.get('level')?.invalid) {
@@ -64,11 +64,11 @@
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Día
                             </label>
-                            <select 
-                                formControlName="day" 
+                            <select
+                                formControlName="day"
                                 [class.border-red-500]="formSubmitted && courseForm.get('day')?.invalid"
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none transition-colors">
-                                
+
                                 <option value="" disabled selected>Selecciona un día</option>
                                 <option value="Lunes">Lunes</option>
                                 <option value="Martes">Martes</option>
@@ -86,7 +86,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Hora</label>
-                            <input 
+                            <input
                             formControlName="time"
                             type="time" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none">
                             @if (formSubmitted && courseForm.get('time')?.invalid) {
@@ -96,7 +96,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Duración</label>
-                            <input 
+                            <input
                             formControlName="duration"
                             type="text" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none" >
                             @if (formSubmitted && courseForm.get('duration')?.invalid) {
@@ -108,11 +108,11 @@
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Lugar
                             </label>
-                            <select 
-                                formControlName="location" 
+                            <select
+                                formControlName="location"
                                 [class.border-red-500]="formSubmitted && courseForm.get('location')?.invalid"
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none transition-colors">
-                                
+
                                 <option value="" disabled selected>Selecciona el lugar</option>
                                 <option value="Social Club">Social Club</option>
                                 <option value="Ritmo Vivo">Ritmo Vivo</option>
@@ -133,7 +133,7 @@
                                 Precio</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">$</span>
-                                <input 
+                                <input
                                 formControlName="price" min="0"
                                 type="number" class="w-full p-3 pl-8 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none" placeholder="0.00">
                             </div>
@@ -144,7 +144,7 @@
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Capacidad</label>
-                            <input 
+                            <input
                             formControlName="capacity"
                             type="number" class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none">
                             @if (formSubmitted && courseForm.get('capacity')?.invalid) {
@@ -155,11 +155,11 @@
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Color
                             </label>
-                            <select 
-                                formControlName="color" 
+                            <select
+                                formControlName="color"
                                 [class.border-red-500]="formSubmitted && courseForm.get('color')?.invalid"
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white outline-none transition-colors">
-                                
+
                                 <option value="" disabled selected>Selecciona un color</option>
                                 <option value="red">Rojo</option>
                                 <option value="purple">Púrpura</option>
@@ -177,7 +177,7 @@
 
                     <div class="flex flex-wrap gap-6 p-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-2xl">
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input 
+                            <input
                             formControlName="promotion"
                             type="checkbox" class="sr-only peer">
                             <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
@@ -186,14 +186,14 @@
                         </label>
                     </div>
 
-                    
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div>
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Género
                             </label>
-                            <input type="text" 
-                                formControlName="genre" 
+                            <input type="text"
+                                formControlName="genre"
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none" >
                             @if (formSubmitted && courseForm.get('genre')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">El genero es obligatorio</span>
@@ -204,12 +204,12 @@
                             <label class="block mb-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Fecha de Inicio
                             </label>
-                            <input type="date" 
-                                formControlName="startDate" 
+                            <input type="date"
+                                formControlName="startDate"
                                 class="w-full p-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-700/50 dark:border-gray-600 dark:text-white transition-all outline-none">
                             @if (formSubmitted && courseForm.get('startDate')?.invalid) {
                                 <span class="text-xs text-red-500 mt-1 block">La fecha de inicio es obligatoria</span>
-                            }    
+                            }
                         </div>
                     </div>
                 </div>
@@ -220,7 +220,7 @@
                     </button>
                     <button (click)="actionInSystem()" type="button" class="content-visibility: auto px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow-lg shadow-blue-500/30 transition-all active:scale-95">
                         {{ modalService.currentAction() === 'Create' ? 'Registrar Curso' : 'Guardar Cambios' }}
-                    </button> 
+                    </button>
                 </div>
             </div>
         </div>
