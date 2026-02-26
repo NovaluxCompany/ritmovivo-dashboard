@@ -1,13 +1,14 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed} from '@angular/core';
 import { EnrolledReportService } from '../../service/enrolled-report.service';
 import { EnrolledReportInterface } from '../../models/enrolled-report.interface';
 import { ReportStorageService } from '../../service/report-storage.service';
 import { FormReports } from '../../../../shared/form-reports/form-reports';
 import { NavigationBar } from "../../../../shared/navigation-bar/navigation-bar";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-enrolled-report',
-  imports: [FormReports, NavigationBar],
+  imports: [CommonModule, FormReports, NavigationBar],
   templateUrl: './enrolled-report.html',
   styles: ``,
 })

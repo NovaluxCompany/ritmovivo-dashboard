@@ -95,7 +95,7 @@
           <tbody>
             @for (enrolled of paginatedEnrolleds(); track $index) {
               <tr class="table-row">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate}}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate | date:'dd/MM/yyyy, h:mm a'}}</td>
                 <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">{{enrolled.courseName}}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.location}}</td>
                 <td class="px-6 py-4 whitespace-nowrap">
