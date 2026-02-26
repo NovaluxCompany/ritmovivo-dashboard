@@ -22,7 +22,7 @@ export class EnrolledReport {
     this.loadEnrolledReport({});
 
   }
-  
+
   handleSave(filters: any) {
     this._storage.saveFilters(filters);
     this.loadEnrolledReport(filters);
@@ -31,6 +31,10 @@ export class EnrolledReport {
   handleClear() {
     this._storage.saveFilters({});
     this.loadEnrolledReport({});
+  }
+
+  toggleForm() {
+    this.showForm.set(!this.showForm());
   }
 
   loadEnrolledReport(filters: any) {
