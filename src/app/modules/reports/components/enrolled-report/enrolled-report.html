@@ -92,7 +92,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (enrolled of enrolleds(); track $index) {
+            @for (enrolled of paginatedEnrolleds(); track $index) {
               <tr class="table-row">
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate}}</td>
                 <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">{{enrolled.courseName}}</td>
@@ -165,6 +165,41 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Paginación -->
+      @if (totalPages() > 1) {
+        <div class="flex flex-col items-center px-6 py-4 border-t border-gray-200 bg-gray-50">
+          <!-- Help text -->
+          <span class="text-sm text-gray-600">
+            Mostrando
+            <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
+            a
+            <span class="font-semibold text-[#f3592c]">{{ Math.min(currentPage() * itemsPerPage, enrolleds().length) }}</span>
+            de
+            <span class="font-semibold text-[#f3592c]">{{ enrolleds().length }}</span>
+            inscritos
+          </span>
+          <!-- Buttons -->
+          <div class="inline-flex mt-4 -space-x-px">
+            <!-- Previous Button -->
+            <button
+              type="button"
+              (click)="previousPage()"
+              [disabled]="currentPage() === 1"
+              class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+              Previous
+            </button>
+            <!-- Next Button -->
+            <button
+              type="button"
+              (click)="nextPage()"
+              [disabled]="currentPage() === totalPages()"
+              class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+              Next
+            </button>
+          </div>
+        </div>
+      }
     </div>
   </div>
 </div>

@@ -65,7 +65,7 @@
             </tr>
         </thead>
         <tbody>
-          @for (report of payments(); track $index) {
+          @for (report of paginatedPayments(); track $index) {
              <tr class="table-row">
                 <td class="px-6 py-4">
                     <div class="flex items-center justify-center">
@@ -133,6 +133,41 @@
         </tbody>
     </table>
   </div>
+
+  <!-- Paginación -->
+  @if (totalPages() > 1) {
+    <div class="flex flex-col items-center px-6 py-4 border-t border-gray-200 bg-white rounded-b-2xl">
+      <!-- Help text -->
+      <span class="text-sm text-gray-600">
+        Mostrando
+        <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
+        a
+        <span class="font-semibold text-[#f3592c]">{{ Math.min(currentPage() * itemsPerPage, payments().length) }}</span>
+        de
+        <span class="font-semibold text-[#f3592c]">{{ payments().length }}</span>
+        pagos
+      </span>
+      <!-- Buttons -->
+      <div class="inline-flex mt-4 -space-x-px">
+        <!-- Previous Button -->
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+          Previous
+        </button>
+        <!-- Next Button -->
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+          Next
+        </button>
+      </div>
+    </div>
+  }
 </div>
 
 <app-modal-payments-report></app-modal-payments-report>
