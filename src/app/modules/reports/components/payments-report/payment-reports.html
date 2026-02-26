@@ -109,7 +109,7 @@
                     ${{report.amount}}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    {{report.paymentDate}}
+                    {{ report.paymentDate | date:'dd/MM/yyyy, h:mm a' }}
                 </td>
                 <td class="px-6 py-4">
                     {{report.location}}

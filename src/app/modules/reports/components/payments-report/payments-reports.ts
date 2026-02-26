@@ -6,11 +6,12 @@ import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
 import { FormReports } from '../../../../shared/form-reports/form-reports';
 import { ReportStorageService } from '../../service/report-storage.service';
 import { NavigationBar } from '../../../../shared/navigation-bar/navigation-bar';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-payments-report',
-  imports: [ModalPaymentsReport, FormReports, NavigationBar],
+  imports: [CommonModule, ModalPaymentsReport, FormReports, NavigationBar],
   templateUrl: './payment-reports.html',
   styles: ``,
 })
