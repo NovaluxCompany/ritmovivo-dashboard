@@ -11,23 +11,23 @@
 
   /* ====== BOTONES ====== */
 
-  /* Botón primario - Gradiente púrpura a rosa */
+  /* Botón primario - Gradiente coral a turquesa */
   .btn-primary {
-    @apply bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold
+    @apply bg-gradient-to-r from-[#f3592c] to-[#4ecdc4] text-white font-semibold
            py-2.5 px-5 rounded-xl shadow-lg
            hover:shadow-xl hover:scale-[1.02]
            active:scale-[0.98] transition-all duration-200
-           focus:outline-none focus:ring-4 focus:ring-purple-500/50
+           focus:outline-none focus:ring-4 focus:ring-[#f3592c]/50
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   /* Botón secundario - Contorno */
   .btn-secondary {
-    @apply bg-white text-purple-600 font-semibold border-2 border-purple-600
+    @apply bg-white text-[#f3592c] font-semibold border-2 border-[#f3592c]
            py-2.5 px-5 rounded-xl shadow-sm
-           hover:bg-purple-50 hover:scale-[1.02]
+           hover:bg-[#f3592c]/10 hover:scale-[1.02]
            active:scale-[0.98] transition-all duration-200
-           focus:outline-none focus:ring-4 focus:ring-purple-500/30
+           focus:outline-none focus:ring-4 focus:ring-[#f3592c]/30
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
@@ -111,7 +111,7 @@
 
   /* Tarjeta con gradiente - Tema academia */
   .card-gradient {
-    @apply bg-gradient-to-br from-purple-500 via-pink-500 to-rose-500 text-white
+    @apply bg-gradient-to-br from-[#f3592c] via-[#4ecdc4] to-[#4ecdc4] text-white
            rounded-2xl shadow-xl p-6 transition-all duration-200 hover:shadow-2xl;
   }
 
@@ -120,7 +120,7 @@
 
   .input {
     @apply w-full px-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl
-           focus:ring-2 focus:ring-purple-500 focus:border-transparent
+           focus:ring-2 focus:ring-[#f3592c] focus:border-transparent
            transition-all duration-200 placeholder-gray-400
            hover:border-gray-400;
   }
@@ -139,26 +139,26 @@
 
   .select {
     @apply w-full px-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl
-           focus:ring-2 focus:ring-purple-500 focus:border-transparent
+           focus:ring-2 focus:ring-[#f3592c] focus:border-transparent
            transition-all duration-200 placeholder-gray-400
            hover:border-gray-400 appearance-none cursor-pointer;
   }
 
   .textarea {
     @apply w-full px-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl
-           focus:ring-2 focus:ring-purple-500 focus:border-transparent
+           focus:ring-2 focus:ring-[#f3592c] focus:border-transparent
            transition-all duration-200 placeholder-gray-400
            hover:border-gray-400 resize-none min-h-[100px];
   }
 
   .checkbox {
-    @apply w-5 h-5 text-purple-600 bg-gray-100 border-gray-300 rounded
-           focus:ring-2 focus:ring-purple-500 cursor-pointer;
+    @apply w-5 h-5 text-[#f3592c] bg-gray-100 border-gray-300 rounded
+           focus:ring-2 focus:ring-[#f3592c] cursor-pointer;
   }
 
   .radio {
-    @apply w-5 h-5 text-purple-600 bg-gray-100 border-gray-300
-           focus:ring-2 focus:ring-purple-500 cursor-pointer;
+    @apply w-5 h-5 text-[#f3592c] bg-gray-100 border-gray-300
+           focus:ring-2 focus:ring-[#f3592c] cursor-pointer;
   }
 
 
@@ -192,7 +192,7 @@
   }
 
   .badge-primary {
-    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[#f3592c]/20 text-[#f3592c];
   }
 
   .badge-success {
@@ -223,7 +223,7 @@
   }
 
   .table-header {
-    @apply bg-gradient-to-r from-purple-50 to-pink-50 text-gray-900 font-semibold;
+    @apply bg-gradient-to-r from-[#f3592c]/10 to-[#4ecdc4]/10 text-gray-900 font-semibold;
   }
 
   .table-header th {
@@ -273,15 +273,15 @@
   /* ====== LOADING/SPINNER ====== */
 
   .spinner {
-    @apply w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin;
+    @apply w-12 h-12 border-4 border-[#4ecdc4]/30 border-t-[#f3592c] rounded-full animate-spin;
   }
 
   .spinner-sm {
-    @apply w-6 h-6 border-2 border-purple-200 border-t-purple-600 rounded-full animate-spin;
+    @apply w-6 h-6 border-2 border-[#4ecdc4]/30 border-t-[#f3592c] rounded-full animate-spin;
   }
 
   .spinner-lg {
-    @apply w-20 h-20 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin;
+    @apply w-20 h-20 border-4 border-[#4ecdc4]/30 border-t-[#f3592c] rounded-full animate-spin;
   }
 
   .loading-overlay {
@@ -293,28 +293,28 @@
 
   .nav-link {
     @apply px-4 py-2 rounded-lg text-gray-700 font-medium transition-all duration-200
-           hover:bg-purple-50 hover:text-purple-700;
+           hover:bg-[#f3592c]/10 hover:text-[#f3592c];
   }
 
   .nav-link-active {
     @apply px-4 py-2 rounded-lg font-medium transition-all duration-200
-           bg-gradient-to-r from-purple-500 to-pink-500 text-white
-           hover:from-purple-600 hover:to-pink-600;
+           bg-gradient-to-r from-[#f3592c] to-[#4ecdc4] text-white
+           hover:from-[#f3592c]/90 hover:to-[#4ecdc4]/90;
   }
 
 
   /* ====== UTILIDADES GENERALES ====== */
 
   .gradient-text {
-    @apply bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-[#f3592c] to-[#4ecdc4] bg-clip-text text-transparent;
   }
 
   .gradient-bg {
-    @apply bg-gradient-to-r from-purple-600 to-pink-600;
+    @apply bg-gradient-to-r from-[#f3592c] to-[#4ecdc4];
   }
 
   .gradient-bg-soft {
-    @apply bg-gradient-to-r from-purple-50 to-pink-50;
+    @apply bg-gradient-to-r from-[#f3592c]/10 to-[#4ecdc4]/10;
   }
 
   .shadow-dance {
@@ -348,10 +348,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #9333ea, #ec4899);
+  background: linear-gradient(180deg, #f3592c, #4ecdc4);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #7e22ce, #db2777);
+  background: linear-gradient(180deg, #d94820, #3ab8af);
 }
