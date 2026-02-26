@@ -2,46 +2,106 @@
   id="default-sidebar"
   [class.w-64]="isExpanded()"
   [class.w-16]="!isExpanded()"
-  class="fixed top-0 left-0 z-40 h-screen transition-all duration-300 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700"
+  class="sidebar"
   aria-label="Sidebar">
 
-   <div class="h-full px-3 py-4 overflow-y-auto">
-      <button (click)="toggleSidebar()" class="p-2 mb-5 text-gray-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
-         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-      </button>
+   <div class="h-full flex flex-col">
 
-      <ul class="space-y-2 font-medium">
-         <li>
-            <a [routerLink]="['/cursos']" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <svg class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 18">
-                  <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/>
+      <!-- Header -->
+      <div class="sidebar-header">
+         <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3" [class.justify-center]="!isExpanded()" [class.w-full]="!isExpanded()">
+               <div class="sidebar-logo">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                  </svg>
+               </div>
+               <div class="transition-opacity duration-300" [class.hidden]="!isExpanded()">
+                  <h2 class="sidebar-title">RitmoVivo</h2>
+                  <p class="sidebar-subtitle">Dashboard</p>
+               </div>
+            </div>
+            <button (click)="toggleSidebar()" class="sidebar-toggle" [class.hidden]="!isExpanded()">
+               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                </svg>
-               <span class="ms-3 transition-opacity duration-300" [class.hidden]="!isExpanded()">Cursos</span>
-            </a>
-         </li>
+            </button>
+         </div>
 
-         <li>
-            <a [routerLink]="['/pagos']"
-               routerLinkActive="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-blue-400"
-               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 14">
-                  <path d="M18 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM2 12V6h16v6H2Z"/>
-               </svg>
-               <span class="ms-3 whitespace-nowrap" [class.hidden]="!isExpanded()">Pagos</span>
-            </a>
-         </li>
+         <!-- Botón para expandir cuando está colapsado -->
+         <button (click)="toggleSidebar()" class="sidebar-toggle w-full mt-3" [class.hidden]="isExpanded()">
+            <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+         </button>
+      </div>
 
-         <li>
-            <a [routerLink]="['/inscritos']"
-               routerLinkActive="bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-blue-400"
-               class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <svg class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 18">
-                  <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
-               </svg>
-               <span class="ms-3 whitespace-nowrap" [class.hidden]="!isExpanded()">Inscritos</span>
-            </a>
-         </li>
+      <!-- Menú de navegación -->
+      <nav class="sidebar-nav">
+         <ul class="space-y-2">
+            <li>
+               <a [routerLink]="['/cursos']"
+                  routerLinkActive="active"
+                  #rla1="routerLinkActive"
+                  [class.active]="rla1.isActive"
+                  class="sidebar-nav-item">
+                  <div class="sidebar-nav-icon">
+                     <svg fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4h3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"/>
+                     </svg>
+                  </div>
+                  <div class="sidebar-nav-text" [class.hidden]="!isExpanded()">
+                     <span>Cursos</span>
+                     <p>Gestión de clases</p>
+                  </div>
+               </a>
+            </li>
+
+            <li>
+               <a [routerLink]="['/pagos']"
+                  routerLinkActive="active"
+                  #rla2="routerLinkActive"
+                  [class.active]="rla2.isActive"
+                  class="sidebar-nav-item">
+                  <div class="sidebar-nav-icon">
+                     <svg fill="currentColor" viewBox="0 0 20 14">
+                        <path d="M18 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2ZM2 12V6h16v6H2Z"/>
+                     </svg>
+                  </div>
+                  <div class="sidebar-nav-text" [class.hidden]="!isExpanded()">
+                     <span class="whitespace-nowrap">Pagos</span>
+                     <p>Registro de pagos</p>
+                  </div>
+               </a>
+            </li>
+
+            <li>
+               <a [routerLink]="['/inscritos']"
+                  routerLinkActive="active"
+                  #rla3="routerLinkActive"
+                  [class.active]="rla3.isActive"
+                  class="sidebar-nav-item">
+                  <div class="sidebar-nav-icon">
+                     <svg fill="currentColor" viewBox="0 0 20 18">
+                        <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
+                     </svg>
+                  </div>
+                  <div class="sidebar-nav-text" [class.hidden]="!isExpanded()">
+                     <span class="whitespace-nowrap">Inscritos</span>
+                     <p>Alumnos registrados</p>
+                  </div>
+               </a>
+            </li>
          </ul>
+      </nav>
+
+      <!-- Footer -->
+      <div class="sidebar-footer" [class.hidden]="!isExpanded()">
+         <div class="sidebar-footer-content">
+            <p class="sidebar-footer-title">Academia RitmoVivo</p>
+            <p class="sidebar-footer-version">Dashboard v1.0</p>
+         </div>
+      </div>
 
    </div>
 </aside>
