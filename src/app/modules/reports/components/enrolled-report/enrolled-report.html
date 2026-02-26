@@ -110,17 +110,39 @@
                 <td class="px-6 py-4 font-medium text-gray-900">{{enrolled.buyerFullName}}</td>
                 <td class="px-6 py-4 text-gray-700">{{enrolled.buyerEmail}}</td>
                 <td class="px-6 py-4 text-gray-700">{{enrolled.buyerPhone}}</td>
-                <td class="px-6 py-4 text-center">
-                  @if(enrolled.cashPayment) {
-                    <span class="badge-success">Sí</span>
-                  } @else {
-                    <span class="text-gray-400">—</span>
-                  }
+                <td class="px-6 py-4">
+                  <div class="flex items-center justify-center">
+                    @if(enrolled.cashPayment) {
+                      <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                      </div>
+                    } @else {
+                      <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                      </div>
+                    }
+                  </div>
                 </td>
-                <td class="px-6 py-4 text-center">
-                  <span [class]="enrolled.includesPartner ? 'badge-primary' : 'text-gray-400'">
-                    {{enrolled.includesPartner}}
-                  </span>
+                <td class="px-6 py-4">
+                  <div class="flex items-center justify-center">
+                    @if(enrolled.includesPartner === 'Sí' || enrolled.includesPartner === 'Si' || enrolled.includesPartner === 'true' || enrolled.includesPartner === '1') {
+                      <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                      </div>
+                    } @else {
+                      <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                      </div>
+                    }
+                  </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.companionFullName}}</td>
                 <td class="px-6 py-4 text-gray-700">{{enrolled.companionIdentificationNumber}}</td>
