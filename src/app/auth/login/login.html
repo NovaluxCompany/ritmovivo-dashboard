@@ -1,43 +1,166 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-50">
-  <div class="w-full max-w-md p-8 bg-white border border-gray-200 rounded-lg shadow-sm">
-    
-    <form [formGroup]="form"  (ngSubmit)="login()" class="space-y-6">
-      <h2 class="text-2xl font-bold text-center text-gray-900">Login</h2>
+<!-- Contenedor principal con dos columnas -->
+<div class="flex min-h-screen bg-white">
+
+  <!-- Panel izquierdo - Imagen e identidad de marca -->
+  <div class="hidden lg:flex lg:w-1/2 xl:w-3/5 relative overflow-hidden bg-gradient-to-br from-purple-600 via-pink-500 to-rose-500">
+    <!-- Overlay decorativo con patrón -->
+    <div class="absolute inset-0 bg-black/20">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+    </div>
+
+    <!-- Imagen de fondo - Reemplaza con tu imagen real -->
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-overlay opacity-40"
+         style="background-image: url('https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=2069');">
+    </div>
+
+    <!-- Contenido del panel izquierdo -->
+    <div class="relative z-10 flex flex-col justify-between p-12 text-white w-full">
       <div>
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Correo Electronico</label>
-        <input type="email" id="email" name="email" formControlName="email"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-          placeholder="name@company.com">
+        <h1 class="text-5xl font-bold mb-4 tracking-tight">RitmoVivo</h1>
+        <p class="text-xl font-light opacity-90">Academia de Baile</p>
       </div>
 
-      <div>
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Contraseña</label>
-        <input type="password" id="password" name="password" formControlName="password"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-          placeholder="">
-      </div>
+      <div class="space-y-6">
+        <h2 class="text-3xl font-semibold leading-tight">
+          Donde cada paso<br />cuenta tu historia
+        </h2>
+        <p class="text-lg opacity-90 max-w-md font-light">
+          Descubre tu pasión por el baile. Clases profesionales de salsa, bachata,
+          tango y mucho más.
+        </p>
 
-      <button type="submit" 
-        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-        Ingresar
-      </button>
-      
-      @if (showError) {
-        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-200" role="alert">
-        <span class="font-medium" >Error:</span> {{messageError}}
+        <!-- Iconos decorativos -->
+        <div class="flex gap-6 pt-4">
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium">Clases en vivo</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium">Instructores certificados</span>
+          </div>
         </div>
-      }
-    </form>
+      </div>
 
-    @if (isLoading) {
-    <div class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm">
-    <div class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-    
-      <p class="mt-4 text-lg font-medium text-gray-700 animate-pulse">
-      Conectandose al servidor...
+      <!-- Decoración inferior -->
+      <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
+    </div>
+  </div>
+
+  <!-- Panel derecho - Formulario de login -->
+  <div class="flex-1 flex items-center justify-center p-8 lg:p-12 bg-gray-50">
+    <div class="w-full max-w-md">
+
+      <!-- Logo y título para móvil -->
+      <div class="lg:hidden mb-8 text-center">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+          RitmoVivo
+        </h1>
+        <p class="text-gray-600">Academia de Baile</p>
+      </div>
+
+      <!-- Contenedor del formulario -->
+      <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 lg:p-10">
+
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 mb-2">Bienvenido</h2>
+          <p class="text-gray-600">Ingresa tus credenciales para continuar</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="login()" class="space-y-6">
+
+          <!-- Campo Email -->
+          <div class="space-y-2">
+            <label for="email" class="block text-sm font-semibold text-gray-700">
+              Correo Electrónico
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              formControlName="email"
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl
+                     focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                     transition-all duration-200 placeholder-gray-400
+                     hover:border-gray-400"
+              placeholder="tu@email.com">
+          </div>
+
+          <!-- Campo Password -->
+          <div class="space-y-2">
+            <label for="password" class="block text-sm font-semibold text-gray-700">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              formControlName="password"
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-300 text-gray-900 rounded-xl
+                     focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                     transition-all duration-200 placeholder-gray-400
+                     hover:border-gray-400"
+              placeholder="••••••••">
+          </div>
+
+          <!-- Mensaje de error -->
+          @if (showError) {
+            <div class="flex items-start gap-3 p-4 bg-red-50 border border-red-200 rounded-xl transition-all duration-300">
+              <svg class="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+              </svg>
+              <div>
+                <p class="text-sm font-semibold text-red-900">Error de autenticación</p>
+                <p class="text-sm text-red-700">{{messageError}}</p>
+              </div>
+            </div>
+          }
+
+          <!-- Botón de submit -->
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold
+                   py-3.5 px-6 rounded-xl shadow-lg shadow-purple-500/30
+                   hover:shadow-xl hover:shadow-purple-500/40 hover:scale-[1.02]
+                   active:scale-[0.98]
+                   transition-all duration-200
+                   focus:outline-none focus:ring-4 focus:ring-purple-500/50
+                   disabled:opacity-50 disabled:cursor-not-allowed">
+            Ingresar
+          </button>
+
+        </form>
+
+        <!-- Enlaces adicionales -->
+      </div>
+
+      <!-- Footer -->
+      <p class="text-center text-sm text-gray-500 mt-8">
+        © 2026 RitmoVivo. Todos los derechos reservados.
       </p>
     </div>
-  }
   </div>
+
+  <!-- Loading overlay -->
+  @if (isLoading) {
+    <div class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white/95 backdrop-blur-md">
+      <div class="relative">
+        <!-- Spinner externo -->
+        <div class="w-20 h-20 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+        <!-- Spinner interno -->
+        <div class="absolute inset-0 m-auto w-12 h-12 border-4 border-pink-200 border-t-pink-600 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 1s;"></div>
+      </div>
+
+      <div class="mt-6 text-center">
+        <p class="text-xl font-semibold text-gray-800 mb-2 animate-pulse">
+          Conectando al servidor
+        </p>
+        <p class="text-sm text-gray-600">
+          Por favor espera un momento...
+        </p>
+      </div>
+    </div>
+  }
+
 </div>
 
