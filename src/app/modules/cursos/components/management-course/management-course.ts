@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { ModalCourseService } from '../../service/modal-course.service';
 import { ModalCourse } from "../modal-course/modal-course";
 import { CourseService } from '../../service/course.service';
@@ -20,6 +20,26 @@ export class ManagementCourse {
   private _courseService = inject(CourseService)
   courses = signal<CourseInterface[]>([]);
 
+  // Hacer Math disponible en el template
+  Math = Math;
+
+  // Paginación
+  currentPage = signal<number>(1);
+  itemsPerPage = 15;
+
+  // Computed para obtener cursos paginados
+  paginatedCourses = computed(() => {
+    const allCourses = this.courses();
+    const start = (this.currentPage() - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return allCourses.slice(start, end);
+  });
+
+  // Computed para total de páginas
+  totalPages = computed(() => {
+    return Math.ceil(this.courses().length / this.itemsPerPage);
+  });
+
   ngOnInit() {
     this.loadCourses();
   }
@@ -28,9 +48,24 @@ export class ManagementCourse {
     this._courseService.viewInfo().subscribe({
       next: (data) => {
         this.courses.set(data)
+        // Resetear a página 1 cuando se cargan los cursos
+        this.currentPage.set(1);
       },
       error: (err) => console.error('Error al cargar cursos:', err)
     })
+  }
+
+  // Métodos de paginación
+  nextPage() {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.set(this.currentPage() + 1);
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.set(this.currentPage() - 1);
+    }
   }
 
   openCreate(){
@@ -65,7 +100,7 @@ export class ManagementCourse {
     instructor: course.instructor,
     duration: course.duration,
     price: course.price,
-    color: course.color && course.color.startsWith('#') ? course.color : '#3b82f6',
+    color: course.color,
     genre: course.genre,
     day: course.day,
     time: formattedTime,

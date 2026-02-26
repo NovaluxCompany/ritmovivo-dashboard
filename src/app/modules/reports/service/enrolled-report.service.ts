@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { EnrolledReportInterface } from '../models/enrolled-report.interface';
 import { checkToken } from '../../../core/interceptor/token-interceptor';
+import { ClassesReportInterface } from '../models/classes-report.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -46,4 +47,8 @@ export class EnrolledReportService {
     { params, context: checkToken(), responseType: 'blob' }
   );
 }
+
+  getidClass(){
+    return this._http.get<ClassesReportInterface[]>(`${this._env.urlBD}/classes/names-list`, { context: checkToken() });
+  }
 }

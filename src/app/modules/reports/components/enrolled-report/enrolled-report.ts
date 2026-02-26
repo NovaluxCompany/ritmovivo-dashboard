@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { EnrolledReportService } from '../../service/enrolled-report.service';
 import { EnrolledReportInterface } from '../../models/enrolled-report.interface';
 import { ReportStorageService } from '../../service/report-storage.service';
@@ -18,8 +18,29 @@ export class EnrolledReport {
   enrolleds = signal<EnrolledReportInterface[]>([]);
   showForm = signal<boolean>(true);
 
+  // Hacer Math disponible en el template
+  Math = Math;
+
+  // Paginación
+  currentPage = signal<number>(1);
+  itemsPerPage = 15;
+
+  // Computed para obtener inscritos paginados
+  paginatedEnrolleds = computed(() => {
+    const allEnrolleds = this.enrolleds();
+    const start = (this.currentPage() - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    return allEnrolleds.slice(start, end);
+  });
+
+  // Computed para total de páginas
+  totalPages = computed(() => {
+    return Math.ceil(this.enrolleds().length / this.itemsPerPage);
+  });
+
   ngOnInit() {
     this.loadEnrolledReport({});
+
   }
 
   handleSave(filters: any) {
@@ -32,11 +53,32 @@ export class EnrolledReport {
     this.loadEnrolledReport({});
   }
 
+  toggleForm() {
+    this.showForm.set(!this.showForm());
+  }
+
   loadEnrolledReport(filters: any) {
     this._enrrolledReportService.viewEnrolledReportInfo(filters).subscribe({
-      next: (data) => this.enrolleds.set(data),
+      next: (data) => {
+        this.enrolleds.set(data);
+        // Resetear a página 1 cuando se cargan los datos
+        this.currentPage.set(1);
+      },
       error: (err) => console.error('Error:', err)
     });
+  }
+
+  // Métodos de paginación
+  nextPage() {
+    if (this.currentPage() < this.totalPages()) {
+      this.currentPage.set(this.currentPage() + 1);
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage() > 1) {
+      this.currentPage.set(this.currentPage() - 1);
+    }
   }
 
   handleDownloadExcel() {
