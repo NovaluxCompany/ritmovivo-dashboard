@@ -13,7 +13,7 @@ export class ModalCourseService {
 
   private _isOpen = signal(false);
   isOpen = this._isOpen.asReadonly();
-  
+
   private _currentAction = signal<string>('');
   currentAction = this._currentAction.asReadonly();
 
@@ -25,6 +25,8 @@ export class ModalCourseService {
   };
 
   prepareBody(data: CourseInterface): CourseInterface {
+    const dateObj = new Date(data.startDate);
+    const formattedDate = dateObj.toISOString().split('T')[0];
     return {
       ...data,
       name: data.name.trim(),
@@ -34,7 +36,7 @@ export class ModalCourseService {
       promotion: Boolean(data.promotion),
       capacity: Number(data.capacity),
       availableSlots: Number(data.capacity),
-      startDate: new Date(data.startDate).toISOString()
+      startDate: new Date(data.startDate).toISOString().split('T')[0],
     };
   }
 
@@ -48,8 +50,8 @@ export class ModalCourseService {
     const options = { context: checkToken() };
 
     return this._http.post<CourseInterface>(
-      this.urlChange('create'), 
-      body, 
+      this.urlChange('create'),
+      body,
       options
     );
   }
@@ -75,4 +77,4 @@ export class ModalCourseService {
   }
 }
 
-  
+
