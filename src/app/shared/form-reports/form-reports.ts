@@ -1,5 +1,7 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { EnrolledReportService } from '../../modules/reports/service/enrolled-report.service';
+import { ClassesReportInterface } from '../../modules/reports/models/classes-report.interface';
 
 @Component({
   selector: 'app-form-reports',
@@ -11,15 +13,17 @@ export class FormReports {
   isEnrolled = input<boolean>(false);
   onSave = output<any>();
   onClear = output<void>();
+  private _enrrolledReportService = inject(EnrolledReportService);
+  classes = signal<ClassesReportInterface[]>([]);
 
   private _fb = inject(FormBuilder);
-  
+
   filterForm: FormGroup = this._fb.group({
     enrollmentDate: [''],
     classId: [''],
     buyerIdentificationNumber: [''],
     buyerFullName: [''],
-    hasCompanion: ['no'],
+    hasCompanion: [''],
     companionIdentificationNumber: [''],
     companionFullName: [''],
     identificationNumber: [''],
@@ -27,6 +31,10 @@ export class FormReports {
     paymentDate: [''],
     location: ['']
   });
+
+  ngOnInit(){
+    this.loadClasses();
+  }
 
   clearForm(){
     this.filterForm.reset();
@@ -37,5 +45,14 @@ export class FormReports {
     const values = this.filterForm.value;
     console.log('Hijo - Emisión manual por clic:', values);
     this.onSave.emit(values);
+  }
+
+  loadClasses() {
+    this._enrrolledReportService.getidClass().subscribe({
+      next: (data) => {
+        this.classes.set(data);
+      },
+      error: (err) => console.error('Error al cargar las clases:', err)
+    });
   }
 }

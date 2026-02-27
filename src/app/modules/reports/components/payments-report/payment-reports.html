@@ -1,40 +1,90 @@
 <app-navigation-bar #nav></app-navigation-bar>
 
 <div
-  class="p-4 transition-all duration-300"
+  class="p-8 transition-all duration-300 gradient-bg-soft min-h-screen"
   [class.sm:ml-64]="nav.isExpanded()"
   [class.sm:ml-20]="!nav.isExpanded()">
 
-  <div class="mb-6 mt-2">
-    <app-form-reports
-      (onSave)="handleSave($event)"
-      (onClear)="handleClear()">
-    </app-form-reports>
+  <!-- Encabezado -->
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-4xl font-bold text-[#f3592c]">Reporte de Pagos</h1>
   </div>
 
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg border dark:border-gray-700">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+  <!-- Sección de Filtros Desplegable -->
+  <div class="mb-8 card">
+    <button
+      type="button"
+      (click)="toggleForm()"
+      class="w-full flex items-center justify-between p-4 hover:bg-gray-50 rounded-xl transition-all duration-200 cursor-pointer">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 bg-gradient-to-br from-[#f3592c] to-[#4ecdc4] rounded-xl flex items-center justify-center shadow-lg">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+          </svg>
+        </div>
+        <div class="text-left">
+          <h2 class="text-xl font-bold text-[#f3592c]">Filtros de Búsqueda</h2>
+          <p class="text-sm text-gray-600">Click para expandir/contraer los filtros</p>
+        </div>
+      </div>
+      <svg
+        class="w-6 h-6 text-gray-600 transition-transform duration-300"
+        [class.rotate-180]="showForm()"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+
+    @if(showForm()) {
+      <div class="pt-4 border-t border-gray-200 mt-4">
+        <app-form-reports
+          (onSave)="handleSave($event)"
+          (onClear)="handleClear()">
+        </app-form-reports>
+      </div>
+    }
+  </div>
+
+  <!-- Tabla de Pagos -->
+  <div class="table-container">
+    <table class="table">
+        <thead class="table-header">
             <tr>
-                <th scope="col" class="px-6 py-3 whitespace-nowrap">Pago en efectivo</th>
-                <th scope="col" class="px-6 py-3 whitespace-nowrap">Nombre completo</th>
-                <th scope="col" class="px-6 py-3 whitespace-nowrap">ID / Identificación</th>
-                <th scope="col" class="px-6 py-3">Correo electrónico</th>
-                <th scope="col" class="px-6 py-3">Teléfono</th>
-                <th scope="col" class="px-6 py-3 whitespace-nowrap">Fecha nacimiento</th>
-                <th scope="col" class="px-6 py-3 text-center">Cursos</th>
-                <th scope="col" class="px-6 py-3">Cantidad</th>
-                <th scope="col" class="px-6 py-3 whitespace-nowrap">Fecha de pago</th>
-                <th scope="col" class="px-6 py-3">Lugar</th>
+                <th scope="col" class="px-6 py-4 whitespace-nowrap">Pago en efectivo</th>
+                <th scope="col" class="px-6 py-4 whitespace-nowrap">Nombre completo</th>
+                <th scope="col" class="px-6 py-4 whitespace-nowrap">ID / Identificación</th>
+                <th scope="col" class="px-6 py-4">Correo electrónico</th>
+                <th scope="col" class="px-6 py-4">Teléfono</th>
+                <th scope="col" class="px-6 py-4 whitespace-nowrap">Fecha nacimiento</th>
+                <th scope="col" class="px-6 py-4 text-center">Cursos</th>
+                <th scope="col" class="px-6 py-4">Cantidad</th>
+                <th scope="col" class="px-6 py-4 whitespace-nowrap">Fecha de pago</th>
+                <th scope="col" class="px-6 py-4">Lugar</th>
             </tr>
         </thead>
         <tbody>
-          @for (report of payments(); track $index) {
-             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="px-6 py-4 text-center">
-                    {{report.cashPayment}}
+          @for (report of paginatedPayments(); track $index) {
+             <tr class="table-row">
+                <td class="px-6 py-4">
+                    <div class="flex items-center justify-center">
+                      @if(report.cashPayment) {
+                        <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                          <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
+                      } @else {
+                        <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                          <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                        </div>
+                      }
+                    </div>
                 </td>
-                <td class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">
                     {{report.bookingInfo.fullName}}
                 </td>
                 <td class="px-6 py-4">
@@ -51,24 +101,73 @@
                 </td>
                 <td class="px-6 py-4 text-center">
                   <button type="button" (click)="openModal(report.courses)"
-                          class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                          class="btn-primary btn-sm cursor-pointer">
                       Ver detalle
                   </button>
                 </td>
-                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                <td class="px-6 py-4 font-bold text-[#f3592c]">
                     ${{report.amount}}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
-                    {{report.paymentDate}}
+                    {{ report.paymentDate | date:'dd/MM/yyyy, h:mm a' }}
                 </td>
                 <td class="px-6 py-4">
                     {{report.location}}
                 </td>
              </tr>
+          } @empty {
+            <tr>
+              <td colspan="10" class="px-6 py-12">
+                <div class="flex flex-col items-center justify-center gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-[#f3592c] to-[#4ecdc4] rounded-2xl flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                  </div>
+                  <p class="text-lg font-semibold text-gray-600">No hay pagos registrados</p>
+                  <p class="text-sm text-gray-500">Los pagos aparecerán aquí cuando se registren</p>
+                </div>
+              </td>
+            </tr>
           }
         </tbody>
     </table>
   </div>
+
+  <!-- Paginación -->
+  @if (totalPages() > 1) {
+    <div class="flex flex-col items-center px-6 py-4 border-t border-gray-200 bg-white rounded-b-2xl">
+      <!-- Help text -->
+      <span class="text-sm text-gray-600">
+        Mostrando
+        <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
+        a
+        <span class="font-semibold text-[#f3592c]">{{ Math.min(currentPage() * itemsPerPage, payments().length) }}</span>
+        de
+        <span class="font-semibold text-[#f3592c]">{{ payments().length }}</span>
+        pagos
+      </span>
+      <!-- Buttons -->
+      <div class="inline-flex mt-4 -space-x-px">
+        <!-- Previous Button -->
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="currentPage() === 1"
+          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
+          Anterior
+        </button>
+        <!-- Next Button -->
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="currentPage() === totalPages()"
+          class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
+          Siguiente
+        </button>
+      </div>
+    </div>
+  }
 </div>
 
 <app-modal-payments-report></app-modal-payments-report>

@@ -46,14 +46,14 @@ export class ModalCourse {
 
   submitAction() {
     this.formSubmitted = true;
-    
+
     if (!this.validateForm()) return;
 
-    const action = this.modalService.currentAction(); 
+    const action = this.modalService.currentAction();
     const data = this.bodyData;
 
-    const request = (action === 'Edit') 
-      ? this.modalService.editInfo(this.idCourseSelect!, data) 
+    const request = (action === 'Edit')
+      ? this.modalService.editInfo(this.idCourseSelect!, data)
       : this.modalService.insertInfo(data);
 
     request.subscribe({
@@ -87,7 +87,7 @@ export class ModalCourse {
     if (this.courseForm.invalid) {
       this.courseForm.markAllAsTouched();
       return false;
-    } 
+    }
     return true;
   }
 }
