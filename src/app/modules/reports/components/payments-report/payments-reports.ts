@@ -1,7 +1,7 @@
 import { ModalPaymentsReportService } from '../../service/modal-payments-report.service';
 import { Component, inject, signal, computed } from '@angular/core';
 import { ReportsService } from '../../service/payment-reports.service';
-import { ReportInterface } from '../../models/payment-report.interface';
+import { Course, ReportInterface } from '../../models/payment-report.interface';
 import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
 import { FormReports } from '../../../../shared/form-reports/form-reports';
 import { ReportStorageService } from '../../service/report-storage.service';
@@ -48,8 +48,8 @@ export class PaymentsReport {
     this.loadPaymentReport({});
   }
 
-  openModal(courses: any[]) {
-    this._modalReportService.openModal(courses);
+  openModal(courses: any[],  discounts: any[]) {
+    this._modalReportService.openModal(courses, discounts);
   }
 
   handleSave(filters: any) {
@@ -87,5 +87,13 @@ export class PaymentsReport {
       this.currentPage.set(this.currentPage() - 1);
     }
   }
+
+  getDiscountDetail(discounts: any[] | undefined, property: 'description' | 'percentage' | 'value'): string {
+  if (!discounts || discounts.length === 0) {
+    return property === 'description' ? 'Sin descuento' : '0';
+  }
+
+  return discounts.map(d => d[property]).join(', ');
+}
 }
 

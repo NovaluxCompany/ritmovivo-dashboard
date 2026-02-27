@@ -19,6 +19,7 @@ export interface Course {
   level: string;
   mainPerson: Person;
   companions: Companion[];
+  discounts: DiscountsFacture[]
 }
 
 export interface Companion {
@@ -26,6 +27,18 @@ export interface Companion {
   identificationNumber: string;
   phone: string;
   email: string;
+}
+
+export interface DiscountsFacture {
+  description: string;
+  percentage: number;
+  value: number;
+}
+
+export interface DiscountsCourse {
+  description: string;
+  percentage: number;
+  value: number;
 }
 
 export interface ReportInterface {
@@ -36,5 +49,6 @@ export interface ReportInterface {
   amount: number;
   paymentDate: string;
   location: string;
+  discounts: DiscountsCourse[];
   courses: Course[];
 }

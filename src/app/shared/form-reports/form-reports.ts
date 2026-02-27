@@ -26,6 +26,7 @@ export class FormReports {
     hasCompanion: [''],
     companionIdentificationNumber: [''],
     companionFullName: [''],
+    cashPayment: [''],
     identificationNumber: [''],
     fullName: [''],
     paymentDate: [''],

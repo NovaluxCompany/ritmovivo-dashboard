@@ -5,12 +5,10 @@
   [class.sm:ml-64]="nav.isExpanded()"
   [class.sm:ml-20]="!nav.isExpanded()">
 
-  <!-- Encabezado -->
   <div class="flex items-center justify-between mb-8">
     <h1 class="text-4xl font-bold text-[#f3592c]">Reporte de Pagos</h1>
   </div>
 
-  <!-- Sección de Filtros Desplegable -->
   <div class="mb-8 card">
     <button
       type="button"
@@ -47,7 +45,6 @@
     }
   </div>
 
-  <!-- Tabla de Pagos -->
   <div class="table-container">
     <table class="table">
         <thead class="table-header">
@@ -62,6 +59,9 @@
                 <th scope="col" class="px-6 py-4">Cantidad</th>
                 <th scope="col" class="px-6 py-4 whitespace-nowrap">Fecha de pago</th>
                 <th scope="col" class="px-6 py-4">Lugar</th>
+                <th scope="col" class="px-6 py-4">Descuentos</th>
+                <th scope="col" class="px-6 py-4">% Descuento</th>
+                <th scope="col" class="px-6 py-4">Valor Desc.</th>
             </tr>
         </thead>
         <tbody>
@@ -100,7 +100,7 @@
                     {{report.bookingInfo.birthDate}}
                 </td>
                 <td class="px-6 py-4 text-center">
-                  <button type="button" (click)="openModal(report.courses)"
+                  <button type="button" (click)="openModal(report.courses, report.discounts)"
                           class="btn-primary btn-sm cursor-pointer">
                       Ver detalle
                   </button>
@@ -114,10 +114,37 @@
                 <td class="px-6 py-4">
                     {{report.location}}
                 </td>
+                <td class="px-6 py-4">
+                  @if (report.discounts && report.discounts.length > 0) {
+                    <div class="flex flex-col gap-1">
+                      @for (discount of report.discounts; track $index) {
+                        <span class="text-xs text-gray-700">• {{ discount.description }}</span>
+                      }
+                    </div>
+                  }
+                </td>
+                <td class="px-6 py-4 text-center">
+                  @if (report.discounts && report.discounts.length > 0) {
+                    <div class="flex flex-col gap-1">
+                      @for (discount of report.discounts; track $index) {
+                        <span class="text-xs text-gray-700">{{ discount.percentage }}%</span>
+                      }
+                    </div>
+                  }
+                </td>
+                <td class="px-6 py-4 text-center">
+                  @if (report.discounts && report.discounts.length > 0) {
+                    <div class="flex flex-col gap-1">
+                      @for (discount of report.discounts; track $index) {
+                        <span class="text-xs font-semibold text-[#f3592c]">${{ discount.value }}</span>
+                      }
+                    </div>
+                  }
+                </td>
              </tr>
           } @empty {
             <tr>
-              <td colspan="10" class="px-6 py-12">
+              <td colspan="13" class="px-6 py-12">
                 <div class="flex flex-col items-center justify-center gap-4">
                   <div class="w-16 h-16 bg-gradient-to-br from-[#f3592c] to-[#4ecdc4] rounded-2xl flex items-center justify-center">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,10 +161,8 @@
     </table>
   </div>
 
-  <!-- Paginación -->
   @if (totalPages() > 1) {
     <div class="flex flex-col items-center px-6 py-4 border-t border-gray-200 bg-white rounded-b-2xl">
-      <!-- Help text -->
       <span class="text-sm text-gray-600">
         Mostrando
         <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
@@ -147,9 +172,7 @@
         <span class="font-semibold text-[#f3592c]">{{ payments().length }}</span>
         pagos
       </span>
-      <!-- Buttons -->
       <div class="inline-flex mt-4 -space-x-px">
-        <!-- Previous Button -->
         <button
           type="button"
           (click)="previousPage()"
@@ -157,7 +180,6 @@
           class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
           Anterior
         </button>
-        <!-- Next Button -->
         <button
           type="button"
           (click)="nextPage()"
