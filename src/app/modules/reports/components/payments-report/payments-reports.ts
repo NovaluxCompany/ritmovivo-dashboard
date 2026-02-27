@@ -53,7 +53,6 @@ export class PaymentsReport {
   }
 
   handleSave(filters: any) {
-    console.log('Botón presionado: Filtrando ahora...', filters)
     this._storage.saveFilters(filters);
     this.loadPaymentReport(filters);
   }
@@ -73,7 +72,6 @@ export class PaymentsReport {
         // Resetear a página 1 cuando se cargan los datos
         this.currentPage.set(1);
       },
-      error: (err) => console.error('Error:', err)
     });
   }
 

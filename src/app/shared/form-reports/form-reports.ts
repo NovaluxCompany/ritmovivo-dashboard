@@ -43,7 +43,6 @@ export class FormReports {
 
   save() {
     const values = this.filterForm.value;
-    console.log('Hijo - Emisión manual por clic:', values);
     this.onSave.emit(values);
   }
 
@@ -52,7 +51,6 @@ export class FormReports {
       next: (data) => {
         this.classes.set(data);
       },
-      error: (err) => console.error('Error al cargar las clases:', err)
     });
   }
 }
