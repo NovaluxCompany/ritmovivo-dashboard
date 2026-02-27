@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { ReportInterface } from '../models/payment-report.interface';
+import { DiscountsCourse, ReportInterface } from '../models/payment-report.interface';
 import { environment } from '../../../../environments/environment';
 import { checkToken } from '../../../core/interceptor/token-interceptor';
 
@@ -13,14 +13,16 @@ export class ModalPaymentsReportService {
   private _isOpen = signal(false);
   isOpen = this._isOpen.asReadonly();
   selectedCourses = signal<any[]>([]);
-  
+  generalDiscounts = signal<DiscountsCourse[]>([]);
+
 
   viewCourseReportInfo(){
     return this._http.get<ReportInterface[]>(this._env.urlBD + '/reports/payments', {context: checkToken()})
   }
 
-  openModal(courses: any[]) {
+  openModal(courses: any[], discounts: any[]) {
     this.selectedCourses.set(courses);
+    this.generalDiscounts.set(discounts);
     this._isOpen.set(true);
   }
 

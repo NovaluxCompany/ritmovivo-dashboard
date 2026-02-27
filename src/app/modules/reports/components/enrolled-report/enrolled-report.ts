@@ -19,14 +19,11 @@ export class EnrolledReport {
   enrolleds = signal<EnrolledReportInterface[]>([]);
   showForm = signal<boolean>(true);
 
-  // Hacer Math disponible en el template
   Math = Math;
 
-  // Paginación
   currentPage = signal<number>(1);
   itemsPerPage = 15;
 
-  // Computed para obtener inscritos paginados
   paginatedEnrolleds = computed(() => {
     const allEnrolleds = this.enrolleds();
     const start = (this.currentPage() - 1) * this.itemsPerPage;
@@ -34,7 +31,6 @@ export class EnrolledReport {
     return allEnrolleds.slice(start, end);
   });
 
-  // Computed para total de páginas
   totalPages = computed(() => {
     return Math.ceil(this.enrolleds().length / this.itemsPerPage);
   });
@@ -62,13 +58,11 @@ export class EnrolledReport {
     this._enrrolledReportService.viewEnrolledReportInfo(filters).subscribe({
       next: (data) => {
         this.enrolleds.set(data);
-        // Resetear a página 1 cuando se cargan los datos
         this.currentPage.set(1);
       },
     });
   }
 
-  // Métodos de paginación
   nextPage() {
     if (this.currentPage() < this.totalPages()) {
       this.currentPage.set(this.currentPage() + 1);

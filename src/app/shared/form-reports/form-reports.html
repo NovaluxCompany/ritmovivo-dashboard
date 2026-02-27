@@ -17,6 +17,7 @@
   <div class="form-group">
   <label class="label">Identificador de clase</label>
   <select formControlName="classId" class="select">
+    <option value="" disabled selected>Selecciona una clase</option>
     @for (clase of classes(); track clase.id) {
       <option [value]="clase.id">
         {{ clase.name }}
@@ -34,9 +35,20 @@
       <label class="label">Nombre completo del comprador</label>
       <input formControlName="buyerFullName" type="text" class="input">
     </div>
+
+    <div class="form-group">
+      <label class="label">Pago</label>
+      <select formControlName="cashPayment" class="select">
+        <option value="" disabled selected>¿El curso está pago en efectivo?</option>
+        <option [value]="true">Sí</option>
+        <option [value]="false">No</option>
+      </select>
+    </div>
+
     <div class="form-group">
       <label class="label">¿Tiene acompañante?</label>
       <select formControlName="hasCompanion" class="select">
+        <option value="" disabled selected>Selecciona una opción</option>
         <option [value]="true">Sí</option>
         <option [value]="false">No</option>
       </select>
@@ -58,7 +70,7 @@
     }
     } @else {
       <div class="form-group">
-      <label class="label">Numero de identificación</label>
+      <label class="label">Número de identificación</label>
       <input formControlName="identificationNumber" type="text" class="input">
     </div>
 
@@ -80,6 +92,7 @@
     <div class="form-group">
   <label class="label">Identificador de clase</label>
   <select formControlName="classId" class="select">
+    <option value="" disabled selected>Selecciona una clase</option>
     @for (clase of classes(); track clase.id) {
       <option [value]="clase.id">
         {{ clase.name }}
@@ -87,6 +100,16 @@
     }
   </select>
   </div>
+
+    <div class="form-group">
+      <label class="label">Pago</label>
+      <select formControlName="cashPayment" class="select">
+        <option value="" disabled selected>¿El curso está pago en efectivo?</option>
+        <option [value]="true">Sí</option>
+        <option [value]="false">No</option>
+      </select>
+    </div>
+
     <div class="form-group">
       <label class="label">Fecha de pago</label>
       <input formControlName="paymentDate" type="date" class="input">

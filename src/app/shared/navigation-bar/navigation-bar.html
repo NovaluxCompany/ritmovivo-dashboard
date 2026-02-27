@@ -7,7 +7,6 @@
 
    <div class="h-full flex flex-col">
 
-      <!-- Header -->
       <div class="sidebar-header">
          <div class="flex items-center justify-between">
             <div class="flex items-center gap-3" [class.justify-center]="!isExpanded()" [class.w-full]="!isExpanded()">
@@ -28,7 +27,6 @@
             </button>
          </div>
 
-         <!-- Botón para expandir cuando está colapsado -->
          <button (click)="toggleSidebar()" class="sidebar-toggle w-full mt-3" [class.hidden]="isExpanded()">
             <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -36,7 +34,6 @@
          </button>
       </div>
 
-      <!-- Menú de navegación -->
       <nav class="sidebar-nav">
          <ul class="space-y-2">
             <li>
@@ -95,7 +92,22 @@
          </ul>
       </nav>
 
-      <!-- Footer -->
+      <div class="px-3 pb-4">
+        <button
+          (click)="logout()"
+          class="w-full flex items-center gap-3 p-3 rounded-xl text-white bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 shadow-lg hover:shadow-xl transition-all duration-200"
+          [class.justify-center]="!isExpanded()">
+          <div class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </div>
+          <span class="font-semibold transition-opacity duration-300" [class.hidden]="!isExpanded()">
+            Cerrar sesión
+          </span>
+        </button>
+      </div>
+
       <div class="sidebar-footer" [class.hidden]="!isExpanded()">
          <div class="sidebar-footer-content">
             <p class="sidebar-footer-title">Impulsado por Novalux</p>
