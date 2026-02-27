@@ -7,7 +7,6 @@ export class ReportStorageService {
 
   saveFilters(data: any) {
     this._currentFilters.set(data);
-    console.log("Datos del current " + JSON.stringify(data));
   }
 
   getFilters() {

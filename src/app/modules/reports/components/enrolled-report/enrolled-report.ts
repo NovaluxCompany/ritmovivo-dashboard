@@ -65,7 +65,6 @@ export class EnrolledReport {
         // Resetear a página 1 cuando se cargan los datos
         this.currentPage.set(1);
       },
-      error: (err) => console.error('Error:', err)
     });
   }
 
@@ -102,7 +101,6 @@ export class EnrolledReport {
         if (err.error instanceof Blob) {
           const text = await err.error.text();
           const errorObj = JSON.parse(text);
-          console.error('Detalle del error:', errorObj);
           alert(`Error al generar Excel: ${errorObj.message || 'Parámetros inválidos'}`);
         }
       }
