@@ -1,3 +1,3 @@
 export const environment = {
-    urlBD: 'https://dashboard-api.ritmovivosocialclub.com/api/'
+    urlBD: 'https://dashboard-api.ritmovivosocialclub.com/api'
 };
