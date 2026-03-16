@@ -24,16 +24,78 @@ export class EnrolledReport {
   currentPage = signal<number>(1);
   itemsPerPage = 5;
 
+
+  filteredEnrolleds = computed(() => {
+    let list = [...this.enrolleds()];
+    const currentFilters = this._storage.getFilters() || {};
+    if (currentFilters.time) {
+      list = list.filter(enrolled =>
+        this.convertTo24Hour(enrolled.time) === currentFilters.time
+      );
+    }
+    if (currentFilters.purchaseDateStart || currentFilters.purchaseDateEnd) {
+      list = list.filter(enrolled => {
+        if (!enrolled.purchaseDate) return false;
+        const itemDate = new Date(enrolled.purchaseDate).toISOString().split('T')[0];
+
+        const start = currentFilters.purchaseDateStart;
+        const end = currentFilters.purchaseDateEnd;
+
+        if (start && end) {
+          return itemDate >= start && itemDate <= end;
+        } else if (start) {
+          return itemDate >= start;
+        } else if (end) {
+          return itemDate <= end;
+        }
+        return true;
+      });
+    }
+    else if (currentFilters.purchaseDate) {
+      list = list.filter(enrolled => {
+        if (!enrolled.purchaseDate) return false;
+        const itemDate = new Date(enrolled.purchaseDate).toISOString().split('T')[0];
+        return itemDate === currentFilters.purchaseDate;
+      });
+    }
+    if (currentFilters.location) {
+      list = list.filter(enrolled => enrolled.location === currentFilters.location);
+    }
+    if (currentFilters.day) {
+      list = list.filter(enrolled => enrolled.day === currentFilters.day);
+    }
+
+    list.sort((a, b) => {
+      const getTime = (dateValue: any) => {
+        if (!dateValue) return 0;
+        if (dateValue instanceof Date) return dateValue.getTime();
+
+        if (typeof dateValue === 'string' && dateValue.includes('-') && !dateValue.includes('T')) {
+          const parts = dateValue.split('-');
+          if (parts[0].length === 2) {
+            return new Date(+parts[2], +parts[1] - 1, +parts[0]).getTime();
+          }
+        }
+        const d = new Date(dateValue).getTime();
+        return isNaN(d) ? 0 : d;
+      };
+
+      return getTime(b.purchaseDate) - getTime(a.purchaseDate);
+    });
+
+    return list;
+  });
+
   paginatedEnrolleds = computed(() => {
-    const allEnrolleds = this.enrolleds();
     const start = (this.currentPage() - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    return allEnrolleds.slice(start, end);
+    return this.filteredEnrolleds().slice(start, end);
   });
 
   totalPages = computed(() => {
-    return Math.ceil(this.enrolleds().length / this.itemsPerPage);
+    return Math.ceil(this.filteredEnrolleds().length / this.itemsPerPage);
   });
+
 
   ngOnInit() {
     this.loadEnrolledReport({});
@@ -57,7 +119,6 @@ export class EnrolledReport {
   loadEnrolledReport(filters: any) {
     this._enrrolledReportService.viewEnrolledReportInfo(filters).subscribe({
       next: (data) => {
-        // Normalizamos las fechas antes de guardarlas en el signal
         const normalizedData = data.map(item => ({
           ...item,
           courseStartDate: this.parseDate(item.courseStartDate)
@@ -69,17 +130,15 @@ export class EnrolledReport {
     });
   }
 
-  // Función auxiliar para manejar el formato DD-MM-YYYY que JS no siempre entiende bien
   private parseDate(dateStr: string | null): any {
     if (!dateStr) return null;
 
-    // Si tiene guiones y no es ISO (ej: 22-01-2026)
     if (dateStr.includes('-') && !dateStr.includes('T')) {
       const [day, month, year] = dateStr.split('-');
       return new Date(+year, +month - 1, +day);
     }
 
-    return dateStr; // Dejar que Angular DatePipe maneje el formato ISO
+    return dateStr;
   }
 
   nextPage() {
@@ -118,5 +177,33 @@ export class EnrolledReport {
         }
       }
     });
+  }
+
+  private convertTo24Hour(timeStr: string): string {
+    if (!timeStr) return '';
+    let cleanTime = timeStr.toLowerCase()
+      .replace(/\./g, '')
+      .replace(/[\s\u00A0\u202f]/g, '')
+      .trim();
+
+    if (/^\d{1,2}:\d{2}$/.test(cleanTime)) {
+      const [h, m] = cleanTime.split(':');
+      return `${h.padStart(2, '0')}:${m}`;
+    }
+
+    const isPM = cleanTime.includes('pm') || cleanTime.includes('m');
+    const isAM = cleanTime.includes('am');
+
+    const numbersOnly = cleanTime.replace(/[^\d:]/g, '');
+    let [hours, minutes] = numbersOnly.split(':');
+
+    if (!hours || !minutes) return '';
+
+    let h = parseInt(hours, 10);
+
+    if (isPM && h < 12) h += 12;
+    if (isAM && h === 12) h = 0;
+
+    return `${h.toString().padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 }

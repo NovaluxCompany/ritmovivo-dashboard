@@ -2,123 +2,87 @@
   <div class="card-header">
     <h2 class="card-title">@if(isEnrolled()){
       Información de Inscripción
-    }@else {
+      }@else {
       Información de Pago
-    }</h2>
+      }</h2>
   </div>
 
   <form [formGroup]="filterForm" (ngSubmit)="save()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
     @if(isEnrolled()){
-      <div class="form-group">
-      <label class="label">Fecha inscripción</label>
-      <input formControlName="enrollmentDate" type="date" class="input">
-    </div>
-
-  <div class="form-group">
-  <label class="label">Identificador de clase</label>
-  <select formControlName="classId" class="select">
-    <option value="" disabled selected>Selecciona una clase</option>
-    @for (clase of classes(); track clase.id) {
-      <option [value]="clase.id">
-        {{ clase.name }}
-      </option>
-    }
-  </select>
-  </div>
-
     <div class="form-group">
-      <label class="label">Identificación del comprador</label>
-      <input formControlName="buyerIdentificationNumber" type="text" class="input">
-    </div>
-
-    <div class="form-group">
-      <label class="label">Nombre completo del comprador</label>
-      <input formControlName="buyerFullName" type="text" class="input">
-    </div>
-
-    <div class="form-group">
-      <label class="label">Pago</label>
-      <select formControlName="cashPayment" class="select">
-        <option value="" disabled selected>¿El curso está pago en efectivo?</option>
-        <option [value]="true">Sí</option>
-        <option [value]="false">No</option>
+      <label class="label">Identificador de clase</label>
+      <select formControlName="courseName" class="select">
+        <option value="" disabled selected>Selecciona una clase</option>
+        @for (clase of classes(); track clase.id) {
+        <option [value]="clase.id">
+          {{ clase.name }}
+        </option>
+        }
       </select>
     </div>
 
     <div class="form-group">
-      <label class="label">¿Tiene acompañante?</label>
-      <select formControlName="hasCompanion" class="select">
-        <option value="" disabled selected>Selecciona una opción</option>
-        <option [value]="true">Sí</option>
-        <option [value]="false">No</option>
+      <label class="label">Lugar</label>
+      <select formControlName="location" class="select">
+        <option value="" disabled selected>Selecciona el lugar</option>
+        <option value="Social Club">Social Club</option>
+        <option value="Ritmo Vivo">Ritmo Vivo</option>
       </select>
     </div>
 
-    <div class="hidden md:block"></div>
+    <div class="form-group md:col-span-2"> <label class="label mb-2 block font-bold">Rango de Fecha de Compra</label>
 
-        @if (filterForm.get('hasCompanion')?.value === 'true') {
-      <div class="md:col-span-2 mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="form-group">
-        <label class="label">ID del acompañante</label>
-        <input formControlName="companionIdentificationNumber" type="text" class="input">
-      </div>
-      <div class="form-group">
-        <label class="label">Nombre completo del acompañante</label>
-        <input formControlName="companionFullName" type="text" class="input">
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-2">
+          <label class="label whitespace-nowrap" for="purchaseDate1">Desde</label>
+          <input formControlName="purchaseDateStart" type="date" class="input" id="purchaseDate1">
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="label whitespace-nowrap" for="purchaseDate2">Hasta</label>
+          <input formControlName="purchaseDateEnd" type="date" class="input" id="purchaseDate2">
+        </div>
       </div>
     </div>
-    }
+
     } @else {
-      <div class="form-group">
-      <label class="label">Número de identificación</label>
-      <input formControlName="identificationNumber" type="text" class="input">
+
+    <div class="form-group md:col-span-2"> <label class="label mb-2 block font-bold">Rango de Fecha de Compra</label>
+
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-2">
+          <label class="label whitespace-nowrap" for="purchaseDate1">Desde</label>
+          <input formControlName="purchaseDateStart" type="date" class="input" id="purchaseDate1">
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="label whitespace-nowrap" for="purchaseDate2">Hasta</label>
+          <input formControlName="purchaseDateEnd" type="date" class="input" id="purchaseDate2">
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label class="label">Nombre completo</label>
-      <input formControlName="fullName" type="text" class="input">
+    <div class="form-group md:col-span-2"> <label class="label mb-2 block font-bold">Rango de Hora de Compra</label>
+
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-2">
+          <label class="label whitespace-nowrap" for="purchaseDate1">Desde</label>
+          <input formControlName="timeStart" type="time" class="input" id="purchaseDate1">
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="label whitespace-nowrap" for="purchaseDate2">Hasta</label>
+          <input formControlName="timeEnd" type="time" class="input" id="purchaseDate2">
+        </div>
+      </div>
     </div>
 
-  <div class="form-group">
-  <label class="label">Lugar</label>
-  <select formControlName="location" class="select">
-    <option value="" disabled selected>Selecciona el lugar</option>
-    <option value="Social Club">Social Club</option>
-    <option value="Ritmo Vivo">Ritmo Vivo</option>
-  </select>
-  </div>
-
-
-    <div class="form-group">
-  <label class="label">Identificador de clase</label>
-  <select formControlName="classId" class="select">
-    <option value="" disabled selected>Selecciona una clase</option>
-    @for (clase of classes(); track clase.id) {
-      <option [value]="clase.id">
-        {{ clase.name }}
-      </option>
-    }
-  </select>
-  </div>
-
-    <div class="form-group">
-      <label class="label">Pago</label>
-      <select formControlName="cashPayment" class="select">
-        <option value="" disabled selected>¿El curso está pago en efectivo?</option>
-        <option [value]="true">Sí</option>
-        <option [value]="false">No</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label class="label">Fecha de pago</label>
-      <input formControlName="paymentDate" type="date" class="input">
-    </div>
+    
     }
 
 
     <div class="card-footer md:col-span-2">
-      <button (click)="clearForm()" type="button" class="btn-secondary cursor-pointer" >
+      <button (click)="clearForm()" type="button" class="btn-secondary cursor-pointer">
         Borrar
       </button>
       <button type="submit" [disabled]="!filterForm.dirty" class="btn-primary">

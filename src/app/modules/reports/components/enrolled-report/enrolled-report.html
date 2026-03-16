@@ -133,9 +133,11 @@
             Mostrando
             <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
             a
-            <span class="font-semibold text-[#f3592c]">{{ Math.min(currentPage() * itemsPerPage, enrolleds().length) }}</span>
+            <span class="font-semibold text-[#f3592c]">
+              {{ Math.min(currentPage() * itemsPerPage, filteredEnrolleds().length) }}
+            </span>
             de
-            <span class="font-semibold text-[#f3592c]">{{ enrolleds().length }}</span>
+            <span class="font-semibold text-[#f3592c]">{{ filteredEnrolleds().length }}</span>
             inscritos
           </span>
           <!-- Buttons -->
