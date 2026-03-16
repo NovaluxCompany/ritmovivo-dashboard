@@ -22,7 +22,7 @@ export class EnrolledReport {
   Math = Math;
 
   currentPage = signal<number>(1);
-  itemsPerPage = 15;
+  itemsPerPage = 5;
 
   paginatedEnrolleds = computed(() => {
     const allEnrolleds = this.enrolleds();
@@ -57,10 +57,29 @@ export class EnrolledReport {
   loadEnrolledReport(filters: any) {
     this._enrrolledReportService.viewEnrolledReportInfo(filters).subscribe({
       next: (data) => {
-        this.enrolleds.set(data);
+        // Normalizamos las fechas antes de guardarlas en el signal
+        const normalizedData = data.map(item => ({
+          ...item,
+          courseStartDate: this.parseDate(item.courseStartDate)
+        }));
+
+        this.enrolleds.set(normalizedData);
         this.currentPage.set(1);
       },
     });
+  }
+
+  // Función auxiliar para manejar el formato DD-MM-YYYY que JS no siempre entiende bien
+  private parseDate(dateStr: string | null): any {
+    if (!dateStr) return null;
+
+    // Si tiene guiones y no es ISO (ej: 22-01-2026)
+    if (dateStr.includes('-') && !dateStr.includes('T')) {
+      const [day, month, year] = dateStr.split('-');
+      return new Date(+year, +month - 1, +day);
+    }
+
+    return dateStr; // Dejar que Angular DatePipe maneje el formato ISO
   }
 
   nextPage() {

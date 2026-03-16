@@ -76,5 +76,3 @@ export class ModalCourseService {
     this._isOpen.set(false);
   }
 }
-
-

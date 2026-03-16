@@ -1,8 +1,6 @@
-import { ModalPaymentsReportService } from '../../service/modal-payments-report.service';
-import { Component, inject, signal, computed } from '@angular/core';
-import { ReportsService } from '../../service/payment-reports.service';
-import { Course, ReportInterface } from '../../models/payment-report.interface';
-import { ModalPaymentsReport } from '../modal-payments/modal-payments-report';
+
+import { Component, inject, signal, computed } from '@angular/core';import { ReportsService } from '../../service/payment-reports.service';
+import { PaymentInterface } from '../../models/payment-report.interface';
 import { FormReports } from '../../../../shared/form-reports/form-reports';
 import { ReportStorageService } from '../../service/report-storage.service';
 import { NavigationBar } from '../../../../shared/navigation-bar/navigation-bar';
@@ -11,24 +9,22 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-payments-report',
-  imports: [CommonModule, ModalPaymentsReport, FormReports, NavigationBar],
+  imports: [CommonModule, FormReports, NavigationBar],
   templateUrl: './payment-reports.html',
   styles: ``,
 })
 export class PaymentsReport {
-  private _modalReportService = inject(ModalPaymentsReportService)
   private _storage = inject(ReportStorageService);
   private _paymentReportService = inject(ReportsService);
-  payments = signal<ReportInterface[]>([]);
+  payments = signal<PaymentInterface[]>([]);
   showForm = signal<boolean>(true);
-  modalReportService = inject(ModalPaymentsReportService)
 
   // Hacer Math disponible en el template
   Math = Math;
 
   // Paginación
   currentPage = signal<number>(1);
-  itemsPerPage = 15;
+  itemsPerPage = 5;
 
   // Computed para obtener pagos paginados
   paginatedPayments = computed(() => {
@@ -48,9 +44,6 @@ export class PaymentsReport {
     this.loadPaymentReport({});
   }
 
-  openModal(courses: any[],  discounts: any[]) {
-    this._modalReportService.openModal(courses, discounts);
-  }
 
   handleSave(filters: any) {
     this._storage.saveFilters(filters);

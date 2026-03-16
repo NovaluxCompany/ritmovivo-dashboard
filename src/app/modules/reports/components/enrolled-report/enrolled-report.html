@@ -73,81 +73,38 @@
         <table class="table">
           <thead class="table-header">
             <tr>
-              <th class="px-6 py-4 whitespace-nowrap">Fecha insc.</th>
-              <th class="px-6 py-4 whitespace-nowrap">Curso</th>
-              <th class="px-6 py-4">Lugar</th>
-              <th class="px-6 py-4 whitespace-nowrap">Nivel/Género</th>
-              <th class="px-6 py-4">Instructor</th>
-              <th class="px-6 py-4">Inicio</th>
-              <th class="px-6 py-4">Día</th>
-              <th class="px-6 py-4">Hora</th>
-              <th class="px-6 py-4">Cédula comprador</th>
-              <th class="px-6 py-4 whitespace-nowrap">Nombre Comprador</th>
-              <th class="px-6 py-4">Correo</th>
-              <th class="px-6 py-4">Teléfono</th>
-              <th class="px-6 py-4 text-center">Efectivo</th>
-              <th class="px-6 py-4 text-center">Acomp.</th>
-              <th class="px-6 py-4 whitespace-nowrap">Nombre Acomp.</th>
-              <th class="px-6 py-4 whitespace-nowrap">Telefono Acomp.</th>
-              <th class="px-6 py-4">ID Acomp.</th>
+              <th class="px-6 py-4 whitespace-nowrap">NOMBRE PERSONA</th>
+              <th class="px-6 py-4 whitespace-nowrap">CEL CONTACTO</th>
+              <th class="px-6 py-4">NOMBRE PAREJA</th>
+              <th class="px-6 py-4 whitespace-nowrap">CEL CONTACTO</th>
+              <th class="px-6 py-4">VALOR PRODUCTO</th>
+              <th class="px-6 py-4">VALOR TOTAL COMPRA</th>
+              <th class="px-6 py-4">FECHA COMPRA</th>
+              <th class="px-6 py-4">FECHA INICIO</th>
+              <th class="px-6 py-4">NOMBRE DEL CURSO</th>
+              <th class="px-6 py-4 whitespace-nowrap">SEDE</th>
+              <th class="px-6 py-4">DÍA</th>
+              <th class="px-6 py-4">HORA</th>
+              <th class="px-6 py-4 text-center">PROFESOR</th>
             </tr>
           </thead>
           <tbody>
             @for (enrolled of paginatedEnrolleds(); track $index) {
               <tr class="table-row">
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate | date:'dd/MM/yyyy, h:mm a'}}</td>
-                <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">{{enrolled.courseName}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.location}}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <span class="badge-info">
-                    {{enrolled.level}} - {{enrolled.genre}}
-                  </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.instructor}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.courseStartDate}}</td>
+                <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">{{enrolled.buyerName}}</td>
+                <!--<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate | date:'dd/MM/yyyy, h:mm a'}}</td>-->
+                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.buyerPhone}}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ enrolled.companionName ?? 'No incluye pareja' }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ enrolled.companionPhone ?? '-'}}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-700">${{enrolled.productValue}}</td>
+                <td class="px-6 py-4 text-gray-700">${{enrolled.totalPurchaseAmount}}</td>
+                <td class="px-6 py-4 text-gray-700">{{enrolled.purchaseDate | date:'dd/MM/yyyy'}}</td>
+                <td class="px-6 py-4 text-gray-700">{{enrolled.courseStartDate | date:'dd/MM/yyyy'}}</td>
+                <td class="px-6 py-4 font-medium text-gray-900">{{enrolled.courseName}}</td>
+                <td class="px-6 py-4 text-gray-700">{{enrolled.location}}</td>
                 <td class="px-6 py-4 text-gray-700">{{enrolled.day}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.time}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.buyerIdentificationNumber}}</td>
-                <td class="px-6 py-4 font-medium text-gray-900">{{enrolled.buyerFullName}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.buyerEmail}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.buyerPhone}}</td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center justify-center">
-                    @if(enrolled.cashPayment) {
-                      <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                      </div>
-                    } @else {
-                      <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                      </div>
-                    }
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <div class="flex items-center justify-center">
-                    @if(enrolled.includesPartner === 'Sí' || enrolled.includesPartner === 'Si' || enrolled.includesPartner === 'true' || enrolled.includesPartner === '1') {
-                      <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                      </div>
-                    } @else {
-                      <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                      </div>
-                    }
-                  </div>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.companionFullName}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.companionPhone}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.companionIdentificationNumber}}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.time}}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.instructor}}</td>
               </tr>
             } @empty {
               <tr>
