@@ -68,7 +68,7 @@ export class ManagementCourse {
     this.loadCourses(true);
   }
 
-  loadCourses() {
+  loadCourses(resetPage?: boolean) {
     this._courseService.viewInfo().subscribe({
       next: (data) => {
         this.courses.set(data)
