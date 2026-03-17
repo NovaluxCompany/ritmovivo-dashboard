@@ -25,8 +25,12 @@ export class ModalCourseService {
   };
 
   prepareBody(data: CourseInterface): CourseInterface {
-    const dateObj = new Date(data.startDate);
-    const formattedDate = dateObj.toISOString().split('T')[0];
+    const date = new Date(data.startDate);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    const formattedDate = `${month}-${day}-${year}`;
+
     return {
       ...data,
       name: data.name.trim(),
@@ -36,7 +40,7 @@ export class ModalCourseService {
       promotion: Boolean(data.promotion),
       capacity: Number(data.capacity),
       availableSlots: Number(data.capacity),
-      startDate: new Date(data.startDate).toISOString().split('T')[0],
+      startDate: formattedDate,
     };
   }
 

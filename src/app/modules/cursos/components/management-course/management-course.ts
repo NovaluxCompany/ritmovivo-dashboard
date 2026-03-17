@@ -20,10 +20,8 @@ export class ManagementCourse {
   private _courseService = inject(CourseService)
   courses = signal<CourseInterface[]>([]);
 
-  // Hacer Math disponible en el template
   Math = Math;
 
-  // Paginación
   currentPage = signal<number>(1);
   itemsPerPage = 5;
 
@@ -40,7 +38,6 @@ export class ManagementCourse {
     return Math.min(this.currentPage() * this.itemsPerPage, this.totalCourses());
   });
 
-  // Computed para obtener cursos paginados
   paginatedCourses = computed(() => {
     const allCourses = this.courses();
     const start = (this.currentPage() - 1) * this.itemsPerPage;
@@ -48,7 +45,6 @@ export class ManagementCourse {
     return allCourses.slice(start, end);
   });
 
-  // Computed para total de páginas
   totalPages = computed(() => {
     return Math.ceil(this.courses().length / this.itemsPerPage);
   });
@@ -69,21 +65,22 @@ export class ManagementCourse {
   });
 
   ngOnInit() {
-    this.loadCourses();
+    this.loadCourses(true);
   }
 
   loadCourses() {
     this._courseService.viewInfo().subscribe({
       next: (data) => {
         this.courses.set(data)
-        // Resetear a página 1 cuando se cargan los cursos
-        this.currentPage.set(1);
+        if (resetPage) {
+          this.currentPage.set(1);
+        }
       },
       error: (err) => console.error('Error al cargar cursos:', err)
     })
   }
 
-  // Métodos de paginación
+
   nextPage() {
     if (this.currentPage() < this.totalPages()) {
       this.currentPage.set(this.currentPage() + 1);
@@ -149,7 +146,6 @@ export class ManagementCourse {
   editCourse(course: CourseInterface) {
     this._modalService.openModal('Edit');
     this.modalComponent.idCourseSelect = course._id;
-    this.loadCourses()
     this.prepareEdit(course)
   }
 
