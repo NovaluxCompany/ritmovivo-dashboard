@@ -133,13 +133,27 @@ export class EnrolledReport {
   private parseDate(dateStr: string | null): any {
     if (!dateStr) return null;
 
-    if (dateStr.includes('-') && !dateStr.includes('T')) {
-      const [day, month, year] = dateStr.split('-');
-      return new Date(+year, +month - 1, +day);
+    if (dateStr.includes('T')) return dateStr;
+
+    if (dateStr.includes('-')) {
+      const parts = dateStr.split('-');
+
+      if (parts[0].length === 4) return dateStr;
+
+      const part1 = parseInt(parts[0], 10);
+      const part2 = parseInt(parts[1], 10);
+      const year = parseInt(parts[2], 10);
+
+      if (part1 > 12) {
+        return new Date(year, part2 - 1, part1);
+      } else {
+        return new Date(year, part1 - 1, part2);
+      }
     }
 
     return dateStr;
   }
+
 
   nextPage() {
     if (this.currentPage() < this.totalPages()) {

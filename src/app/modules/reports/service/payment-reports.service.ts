@@ -27,5 +27,23 @@ export class ReportsService {
     `${this._env.urlBD}/reports/payments`,
     { params, context: checkToken() }
   );
-}
+  }
+
+  downloadExcelPayments(filters: any = {}) {
+    let params = new HttpParams();
+
+    const data = filters || {};
+
+    Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (value !== null && value !== undefined && value !== '') {
+        params = params.set(key, value.toString());
+      }
+    });
+
+    return this._http.get(
+      `${this._env.urlBD}/reports/payments/excel`,
+      { params, context: checkToken(), responseType: 'blob' }
+    );
+  }
 }
