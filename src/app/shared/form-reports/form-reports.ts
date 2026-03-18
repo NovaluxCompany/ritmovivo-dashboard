@@ -22,18 +22,17 @@ export class FormReports {
     time: [''],
     enrollmentDate: [''],
     courseName: [''],
-    purchaseDateStart: [''],
-    purchaseDateEnd:  [''],
+    startDate: [''],
+    endDate:  [''],
     hasCompanion: [''],
     companionIdentificationNumber: [''],
     purchaseDate: [''],
     day: [''],
     identificationNumber: [''],
     fullName: [''],
-    paymentDate: [''],
     location: [''],
-    timeStart: [''],
-    timeEnd: [''],
+    startTime: [''],
+    endTime: [''],
   });
 
   ngOnInit(){
@@ -45,24 +44,36 @@ export class FormReports {
 
     if (this.isEnrolled()) {
       const selectedClass = this.classes().find(c => c.id === formValues.courseName);
+
       if (selectedClass) {
         const parts = selectedClass.name.split('-').map(p => p.trim());
+
         if (parts.length >= 4) {
           formValues.courseName = parts[0];
-          formValues.location = parts[1];
-          formValues.day = parts[2];
-          formValues.time = this.convertTo24Hour(parts[3]);
+
+          if (!this.filterForm.get('location')?.value) {
+            formValues.location = parts[1];
+          }
+
         } else {
           formValues.courseName = selectedClass.name;
         }
       }
     }
-    Object.keys(formValues).forEach(key => {
-      if (formValues[key] === '' || formValues[key] === null || formValues[key] === undefined) {
-        delete formValues[key];
-      }
-    });
-    this.onSave.emit(formValues);
+
+    if (formValues.purchaseDate && !formValues.purchaseDateStart) {
+      formValues.purchaseDateStart = formValues.purchaseDate;
+      formValues.purchaseDateEnd = formValues.purchaseDate;
+    }
+
+    const finalFilters = Object.fromEntries(
+      Object.entries(formValues).filter(([_, value]) =>
+        value !== '' && value !== null && value !== undefined
+      )
+    );
+
+    console.log('Filtros Aplicados:', finalFilters);
+    this.onSave.emit(finalFilters);
   }
 
   private convertTo24Hour(timeStr: string): string {

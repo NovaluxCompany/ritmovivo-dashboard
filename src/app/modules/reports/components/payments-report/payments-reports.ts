@@ -28,32 +28,50 @@ export class PaymentsReport implements OnInit {
     let list = [...this.payments()];
     const currentFilters = this._storage.getFilters() || {};
 
-    if (currentFilters.purchaseDateStart || currentFilters.purchaseDateEnd) {
+    if (currentFilters.startDate || currentFilters.endDate) {
       list = list.filter(payment => {
         if (!payment.purchaseDate) return false;
 
-        const itemTime = new Date(payment.purchaseDate).getTime();
+        const d = new Date(payment.purchaseDate);
+        const itemTime = new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes()).getTime();
 
-        const getFilterTimestamp = (dateStr: string, timeStr: string, isEnd: boolean) => {
+        const getLimit = (dateStr: string, timeStr: string, isEnd: boolean) => {
           if (!dateStr) return null;
+          const [y, m, day] = dateStr.split('-').map(Number);
 
-          const fallbackTime = isEnd ? '23:59:59' : '00:00:00';
-          const timePart = timeStr ? (timeStr.length === 5 ? `${timeStr}:00` : timeStr) : fallbackTime;
+          let h = isEnd ? 23 : 0;
+          let min = isEnd ? 59 : 0;
 
-
-          return new Date(`${dateStr}T${timePart}Z`).getTime();
+          if (timeStr) {
+            const [hForm, mForm] = timeStr.split(':').map(Number);
+            h = hForm;
+            min = mForm;
+          }
+          return new Date(y, m - 1, day, h, min).getTime();
         };
 
-        const startLimit = getFilterTimestamp(currentFilters.purchaseDateStart, currentFilters.timeStart, false);
-        const endLimit = getFilterTimestamp(currentFilters.purchaseDateEnd, currentFilters.timeEnd, true);
+        const start = getLimit(currentFilters.startDate, currentFilters.startTime, false);
+        const end = getLimit(currentFilters.endDate, currentFilters.endTime, true);
 
-        if (startLimit && endLimit) return itemTime >= startLimit && itemTime <= endLimit;
-        if (startLimit) return itemTime >= startLimit;
-        if (endLimit) return itemTime <= endLimit;
-
+        if (start && end) return itemTime >= start && itemTime <= end;
+        if (start) return itemTime >= start;
+        if (end) return itemTime <= end;
         return true;
       });
     }
+
+    if (currentFilters.location) {
+      list = list.filter(p =>
+        p.location?.toLowerCase().trim() === currentFilters.location.toLowerCase().trim()
+      );
+    }
+
+    if (currentFilters.courseName) {
+      list = list.filter(p =>
+        p.productName.toLowerCase().includes(currentFilters.courseName.toLowerCase())
+      );
+    }
+
     return list;
   });
 
@@ -112,5 +130,31 @@ export class PaymentsReport implements OnInit {
       return property === 'description' ? 'Sin descuento' : '0';
     }
     return discounts.map(d => d[property]).join(', ');
+  }
+
+  handleDownloadExcel() {
+    const currentFilters = this._storage.getFilters() || {};
+
+    this._paymentReportService.downloadExcelPayments(currentFilters).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Pagos.xlsx`;
+
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      },
+      error: async (err) => {
+        if (err.error instanceof Blob) {
+          const text = await err.error.text();
+          const errorObj = JSON.parse(text);
+          alert(`Error al generar Excel: ${errorObj.message || 'Parámetros inválidos'}`);
+        }
+      }
+    });
   }
 }
