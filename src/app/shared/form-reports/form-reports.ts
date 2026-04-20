@@ -23,6 +23,8 @@ export class FormReports {
     startDate: [''],
     endDate: [''],
     location: [''],
+    startTime: [''],
+    endTime: [''],
   });
 
   ngOnInit() {

@@ -2,8 +2,7 @@
 
 <div
   class="min-h-screen bg-gradient-to-br from-[#f3592c]/10 via-[#4ecdc4]/10 to-[#4ecdc4]/20 p-4 sm:p-6 lg:p-8 transition-all duration-300"
-  [class.sm:ml-64]="nav.isExpanded()"
-  [class.sm:ml-20]="!nav.isExpanded()">
+  [class.sm:ml-64]="nav.isExpanded()" [class.sm:ml-20]="!nav.isExpanded()">
 
   <!-- Header Section -->
   <div class="max-w-7xl mx-auto mb-8">
@@ -12,12 +11,11 @@
         <h1 class="text-4xl font-bold text-[#f3592c] mb-2">Reporte de Inscritos</h1>
         <p class="text-gray-600">Consulta y gestiona los registros de inscripciones</p>
       </div>
-      <button
-        type="button"
-        (click)="handleDownloadExcel()"
+      <button type="button" (click)="handleDownloadExcel()"
         class="btn-success flex items-center justify-center gap-2 shadow-xl cursor-pointer">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
         </svg>
         <span>Descargar Excel</span>
       </button>
@@ -28,40 +26,34 @@
   <div class="max-w-7xl mx-auto mb-6">
     <div class="card p-0 overflow-hidden">
       <!-- Collapsible Header -->
-      <button
-        (click)="toggleForm()"
-        type="button"
+      <button (click)="toggleForm()" type="button"
         class="w-full flex items-center justify-between p-6 hover:bg-gray-50 transition-colors duration-200 cursor-pointer">
         <div class="flex items-center gap-3">
           <div class="p-2 bg-gradient-to-br from-[#f3592c] to-[#4ecdc4] rounded-xl">
             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z">
+              </path>
             </svg>
           </div>
           <div class="text-left">
             <h3 class="text-lg font-bold text-[#f3592c]">Filtros de Búsqueda</h3>
-            <p class="text-sm text-gray-600">{{ showForm() ? 'Click para ocultar' : 'Click para mostrar los filtros' }}</p>
+            <p class="text-sm text-gray-600">{{ showForm() ? 'Click para ocultar' : 'Click para mostrar los filtros' }}
+            </p>
           </div>
         </div>
-        <svg
-          class="w-6 h-6 text-gray-500 transition-transform duration-300"
-          [class.rotate-180]="showForm()"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24">
+        <svg class="w-6 h-6 text-gray-500 transition-transform duration-300" [class.rotate-180]="showForm()" fill="none"
+          stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
       </button>
 
       <!-- Collapsible Content -->
       @if (showForm()) {
-        <div class="border-t border-gray-200 p-6 transition-all duration-300">
-          <app-form-reports
-            [isEnrolled]="true"
-            (onSave)="handleSave($event)"
-            (onClear)="handleClear()">
-          </app-form-reports>
-        </div>
+      <div class="border-t border-gray-200 p-6 transition-all duration-300">
+        <app-form-reports [isEnrolled]="true" (onSave)="handleSave($event)" (onClear)="handleClear()">
+        </app-form-reports>
+      </div>
       }
     </div>
   </div>
@@ -86,40 +78,62 @@
               <th class="px-6 py-4">DÍA</th>
               <th class="px-6 py-4">HORA</th>
               <th class="px-6 py-4 text-center">PROFESOR</th>
+              <th class="px-6 py-4 text-center">PAGO</th>
             </tr>
           </thead>
           <tbody>
             @for (enrolled of paginatedEnrolleds(); track $index) {
-              <tr class="table-row">
-                <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">{{enrolled.buyerName}}</td>
-                <!--<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate | date:'dd/MM/yyyy, h:mm a'}}</td>-->
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.buyerPhone}}</td>
-                <td class="px-6 py-4 whitespace-nowrap">{{ enrolled.companionName ?? 'No incluye pareja' }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ enrolled.companionPhone ?? '-'}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">${{enrolled.productValue}}</td>
-                <td class="px-6 py-4 text-gray-700">${{enrolled.totalPurchaseAmount}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.purchaseDate | date:'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.courseStartDate | date:'dd/MM/yyyy'}}</td>
-                <td class="px-6 py-4 font-medium text-gray-900">{{enrolled.courseName}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.location}}</td>
-                <td class="px-6 py-4 text-gray-700">{{enrolled.day}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.time}}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.instructor}}</td>
-              </tr>
-            } @empty {
-              <tr>
-                <td colspan="16" class="px-6 py-12 text-center">
-                  <div class="flex flex-col items-center justify-center gap-4">
-                    <div class="w-16 h-16 bg-gradient-to-br from-[#f3592c]/20 to-[#4ecdc4]/20 rounded-full flex items-center justify-center">
-                      <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                      </svg>
-                    </div>
-                    <p class="text-gray-500 text-lg">No se encontraron registros de inscritos.</p>
-                    <p class="text-gray-400 text-sm">Utiliza los filtros para buscar inscripciones específicas.</p>
+            <tr class="table-row">
+              <td class="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap">{{enrolled.buyerName}}</td>
+              <!--<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{enrolled.enrollmentDate | date:'dd/MM/yyyy, h:mm a'}}</td>-->
+              <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.buyerPhone}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ enrolled.companionName ?? 'No incluye pareja' }}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ enrolled.companionPhone ?? '-'}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-700">${{enrolled.productValue}}</td>
+              <td class="px-6 py-4 text-gray-700">${{enrolled.totalPurchaseAmount}}</td>
+              <td class="px-6 py-4 text-gray-700">{{enrolled.purchaseDate | date:'dd/MM/yyyy'}}</td>
+              <td class="px-6 py-4 text-gray-700">{{enrolled.courseStartDate | date:'dd/MM/yyyy'}}</td>
+              <td class="px-6 py-4 font-medium text-gray-900">{{enrolled.courseName}}</td>
+              <td class="px-6 py-4 text-gray-700">{{enrolled.location}}</td>
+              <td class="px-6 py-4 text-gray-700">{{enrolled.day}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.time}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{enrolled.instructor}}</td>
+              <td class="px-6 py-4">
+                <div class="flex items-center justify-center">
+                  @if(!enrolled.cashPayment) {
+                  <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center" title="Emitida">
+                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                    </svg>
                   </div>
-                </td>
-              </tr>
+                  } @else {
+                  <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center" title="Pendiente">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12">
+                      </path>
+                    </svg>
+                  </div>
+                  }
+                </div>
+              </td>
+            </tr>
+            } @empty {
+            <tr>
+              <td colspan="16" class="px-6 py-12 text-center">
+                <div class="flex flex-col items-center justify-center gap-4">
+                  <div
+                    class="w-16 h-16 bg-gradient-to-br from-[#f3592c]/20 to-[#4ecdc4]/20 rounded-full flex items-center justify-center">
+                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                      </path>
+                    </svg>
+                  </div>
+                  <p class="text-gray-500 text-lg">No se encontraron registros de inscritos.</p>
+                  <p class="text-gray-400 text-sm">Utiliza los filtros para buscar inscripciones específicas.</p>
+                </div>
+              </td>
+            </tr>
             }
           </tbody>
         </table>
@@ -127,39 +141,33 @@
 
       <!-- Paginación -->
       @if (totalPages() > 1) {
-        <div class="flex flex-col items-center px-6 py-4 border-t border-gray-200 bg-gray-50">
-          <!-- Help text -->
-          <span class="text-sm text-gray-600">
-            Mostrando
-            <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
-            a
-            <span class="font-semibold text-[#f3592c]">
-              {{ Math.min(currentPage() * itemsPerPage, filteredEnrolleds().length) }}
-            </span>
-            de
-            <span class="font-semibold text-[#f3592c]">{{ filteredEnrolleds().length }}</span>
-            inscritos
+      <div class="flex flex-col items-center px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <!-- Help text -->
+        <span class="text-sm text-gray-600">
+          Mostrando
+          <span class="font-semibold text-[#f3592c]">{{ (currentPage() - 1) * itemsPerPage + 1 }}</span>
+          a
+          <span class="font-semibold text-[#f3592c]">
+            {{ Math.min(currentPage() * itemsPerPage, filteredEnrolleds().length) }}
           </span>
-          <!-- Buttons -->
-          <div class="inline-flex mt-4 -space-x-px">
-            <!-- Previous Button -->
-            <button
-              type="button"
-              (click)="previousPage()"
-              [disabled]="currentPage() === 1"
-              class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
-              Anterior
-            </button>
-            <!-- Next Button -->
-            <button
-              type="button"
-              (click)="nextPage()"
-              [disabled]="currentPage() === totalPages()"
-              class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
-              Siguiente
-            </button>
-          </div>
+          de
+          <span class="font-semibold text-[#f3592c]">{{ filteredEnrolleds().length }}</span>
+          inscritos
+        </span>
+        <!-- Buttons -->
+        <div class="inline-flex mt-4 -space-x-px">
+          <!-- Previous Button -->
+          <button type="button" (click)="previousPage()" [disabled]="currentPage() === 1"
+            class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-s-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
+            Anterior
+          </button>
+          <!-- Next Button -->
+          <button type="button" (click)="nextPage()" [disabled]="currentPage() === totalPages()"
+            class="inline-flex items-center text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 hover:text-[#f3592c] shadow-sm font-medium leading-5 rounded-e-lg text-sm px-4 py-2.5 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 cursor-pointer">
+            Siguiente
+          </button>
         </div>
+      </div>
       }
     </div>
   </div>

@@ -11,5 +11,6 @@ export interface EnrolledReportInterface {
   "location": string,
   "day": string,
   "time": string,
-  "instructor": string
+  "instructor": string,
+  "cashPayment": boolean
 }
